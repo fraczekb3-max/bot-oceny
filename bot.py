@@ -21,6 +21,7 @@ threading.Thread(target=run_flask).start()
 # --- 2. KONFIGURACJA BOTA ---
 class Bot(commands.Bot):
     def __init__(self):
+        # Włączamy pełne uprawnienia do czytania zawartości wiadomości i historii
         intents = discord.Intents.default()
         intents.members = True          
         intents.message_content = True  
@@ -74,7 +75,7 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
             color=discord.Color.green() if status_legit == "Tak" else discord.Color.red()
         )
         embed.add_field(name="Klient", value=interaction.user.mention, inline=False)
-        embed.add_field(name="Ocena", value="⭐" * liczba_gwiazdek, inline=True)
+        embed.add_field(name="Ocena", value="⭐" * static_stars_count(liczba_gwiazdek), inline=True)
         embed.add_field(name="Czy legitne?", value=f"✅ {status_legit}" if status_legit == "Tak" else f"❌ {status_legit}", inline=True)
         embed.add_field(name="Opinia", value=self.opinia.value, inline=False)
         embed.set_thumbnail(url=interaction.user.display_avatar.url)
@@ -84,17 +85,21 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
 
         try:
             kanal = interaction.client.get_channel(ID_KANALU_OCEN)
+            if int(interaction.channel_id) == ID_KANALU_OCEN:
+                await interaction.response.send_message("Użyj tej komendy w swoim tickecie, a nie tutaj!", ephemeral=True)
+                return
+
             if kanal:
                 # 1. Wysyłamy nową ocenę klienta
                 await kanal.send(embed=embed)
                 await interaction.response.send_message("Dziękujemy za opinię! Twoja ocena została opublikowana.", ephemeral=True)
                 
-                # 2. Zliczamy wszystkie stare oceny z historii kanału, żeby wyliczyć średnią
-                sum_stars = 0
-                count_reviews = 0
-                count_legit = 0
+                # 2. Zliczamy oceny bezpośrednio z obiektów embed
+                sum_stars = liczba_gwiazdek
+                count_reviews = 1
+                count_legit = 1 if status_legit == "Tak" else 0
                 
-                async for message in kanal.history(limit=200):
+                async for message in kanal.history(limit=100):
                     if message.embeds:
                         emb = message.embeds[0]
                         if emb.title == "⭐ Nowa Ocena Pracy ⭐":
@@ -105,15 +110,9 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
                                 if field.name == "Czy legitne?" and "✅" in field.value:
                                     count_legit += 1
                 
-                # Zabezpieczenie matematyczne, jeśli to pierwsza ocena w historii
-                if count_reviews == 0:
-                    avg_rating = liczba_gwiazdek
-                    count_reviews = 1
-                    count_legit = 1 if status_legit == "Tak" else 0
-                else:
-                    avg_rating = round(sum_stars / count_reviews, 2)
+                avg_rating = round(sum_stars / count_reviews, 2)
 
-                # 3. Tworzymy nowy wygląd kafelka statystyk (w stylu Allegro)
+                # 3. Tworzymy nowy panel statystyk
                 stats_embed = discord.Embed(
                     title="📊 PODSUMOWANIE OPINII KLIENTÓW 📊",
                     description="Statystyki naszej pracy aktualizowane automatycznie.",
@@ -123,7 +122,7 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
                 stats_embed.add_field(name="Wszystkich opinii", value=f"📝 {count_reviews}", inline=True)
                 stats_embed.add_field(name="Potwierdzone transakcje (Legit)", value=f"✅ {count_legit}", inline=False)
                 
-                # Pasek postępu zależny od średniej
+                # Pasek postępu
                 progress_bar = "🟩" * int(round(avg_rating)) + "⬜" * (5 - int(round(avg_rating)))
                 stats_embed.add_field(name="Status satysfakcji", value=progress_bar, inline=False)
 
@@ -139,6 +138,8 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
         except Exception as e:
             await interaction.response.send_message(f"Wystąpił problem: {e}", ephemeral=True)
 
+def static_stars_count(val):
+    return max(1, min(5, val))
 
 # --- 4. KOMENDA URUCHAMIAJĄCA OKNO OCENY ---
 @bot.tree.command(name="ocen", description="Oceń naszą pracę")
