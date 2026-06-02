@@ -8,10 +8,9 @@ KANAL_OCEN_ID = 1511099870650302504
 
 class Bot(commands.Bot):
     def __init__(self):
-        # Włączamy intents, żeby bot widział użytkowników i wiadomości do moderacji
         intents = discord.Intents.default()
-        intents.members = True
-        intents.message_content = True
+        intents.members = True          # <--- TO WŁĄCZA CZŁONKÓW
+        intents.message_content = True  # <--- TO WŁĄCZA TREŚĆ WIADOMOŚCI
         super().__init__(command_prefix="!", intents=intents)
 
     async def setup_hook(self):
