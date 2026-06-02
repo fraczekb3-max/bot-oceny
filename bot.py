@@ -27,14 +27,12 @@ class Bot(commands.Bot):
         super().__init__(command_prefix="!", intents=intents)
 
     async def setup_hook(self):
-        # Rejestrujemy komendy ukośnikowe (Slash Commands)
         await self.tree.sync()
 
 bot = Bot()
 
 # --- 3. INTERFEJS OCENIANIA (Formularz / Modal) ---
 class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
-    # Pole wyboru gwiazdek (tekstowe na potrzeby formularza)
     gwiazdki = discord.ui.TextInput(
         label="Liczba gwiazdek (1-5)", 
         placeholder="Wpisz cyfrę od 1 do 5...", 
@@ -42,7 +40,6 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
         max_length=1
     )
     
-    # Pole tekstowe na opinię
     opinia = discord.ui.TextInput(
         label="Twoja opinia", 
         style=discord.TextStyle.paragraph, 
@@ -50,7 +47,6 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
         required=True
     )
     
-    # Pole tekstowe na Legit Check
     legit = discord.ui.TextInput(
         label="Czy usługa jest legitna? (Wpisz: Tak lub Nie)", 
         placeholder="Tak / Nie", 
@@ -60,7 +56,7 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
     )
 
     async def on_submit(self, interaction: discord.Interaction):
-        # Sprawdzamy czy użytkownik wpisał poprawną liczbę gwiazdek
+        # Sprawdzamy liczbę gwiazdek
         try:
             liczba_gwiazdek = int(self.gwiazdki.value)
             if liczba_gwiazdek < 1 or liczba_gwiazdek > 5:
@@ -75,7 +71,7 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
             await interaction.response.send_message("Błąd! W polu 'Czy legitna' wpisz dokładnie 'Tak' lub 'Nie'.", ephemeral=True)
             return
 
-        # Tworzenie ładnej wiadomości (Embed) z podsumowaniem oceny
+        # Tworzenie Embedu z podsumowaniem oceny
         embed = discord.Embed(
             title="⭐ Nowa Ocena Pracy ⭐",
             color=discord.Color.green() if status_legit == "Tak" else discord.Color.red()
@@ -86,19 +82,16 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
         embed.add_field(name="Opinia", value=self.opinia.value, inline=False)
         embed.set_thumbnail(url=interaction.user.display_avatar.url)
 
-        # Wysyłamy ocenę na kanał, na którym użyto komendy
-        await interaction.response.send_message(embed=embed)
+        # --- TWOJE ID KANAŁU Z OCENAMI ---
+        ID_KANALU_OCEN = 1511099870650302504  
 
-
-# --- 4. KOMENDA URUCHAMIAJĄCA OKNO OCENY ---
-@bot.tree.command(name="ocen", description="Oceń naszą pracę")
-async def ocen(interaction: discord.Interaction):
-    await interaction.response.send_modal(OcenaModal())
-
-
-# --- 5. START BOTA ---
-token = os.environ.get("DISCORD_TOKEN")
-if token:
-    bot.run(token)
-else:
-    print("Błąd: Brak DISCORD_TOKEN w zmiennych środowiskowych!")
+        try:
+            # Szukamy kanału po podanym ID
+            kanal = interaction.client.get_channel(ID_KANALU_OCEN)
+            if kanal:
+                # Wysyłamy ramkę na publiczny kanał ocen
+                await kanal.send(embed=embed)
+                # Dyskretna informacja dla klienta w tickecie
+                await interaction.response.send_message("Dziękujemy za opinię! Twoja ocena została opublikowana na kanale z ocenami.", ephemeral=True)
+            else:
+                await
