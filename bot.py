@@ -1,27 +1,11 @@
-from flask import Flask
-import threading
 import os
 import discord
 from discord.ext import commands
 from discord import app_commands
 
-# --- 1. MINI-SERWER FLASK DLA RENDERA ---
-app = Flask('')
-
-@app.route('/')
-def home():
-    return "Bot działa!"
-
-def run_flask():
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host='0.0.0.0', port=port)
-
-threading.Thread(target=run_flask).start()
-
-# --- 2. KONFIGURACJA BOTA ---
+# --- 1. KONFIGURACJA BOTA ---
 class Bot(commands.Bot):
     def __init__(self):
-        # Włączamy pełne uprawnienia do czytania zawartości wiadomości i historii
         intents = discord.Intents.default()
         intents.members = True          
         intents.message_content = True  
@@ -32,7 +16,7 @@ class Bot(commands.Bot):
 
 bot = Bot()
 
-# --- 3. INTERFEJS OCENIANIA (Formularz / Modal) ---
+# --- 2. INTERFEJS OCENIANIA (Formularz / Modal) ---
 class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
     gwiazdki = discord.ui.TextInput(
         label="Liczba gwiazdek (1-5)", 
@@ -90,11 +74,9 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
                 return
 
             if kanal:
-                # 1. Wysyłamy nową ocenę klienta
                 await kanal.send(embed=embed)
                 await interaction.response.send_message("Dziękujemy za opinię! Twoja ocena została opublikowana.", ephemeral=True)
                 
-                # 2. Zliczamy oceny bezpośrednio z obiektów embed
                 sum_stars = liczba_gwiazdek
                 count_reviews = 1
                 count_legit = 1 if status_legit == "Tak" else 0
@@ -112,7 +94,6 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
                 
                 avg_rating = round(sum_stars / count_reviews, 2)
 
-                # 3. Tworzymy nowy panel statystyk
                 stats_embed = discord.Embed(
                     title="📊 PODSUMOWANIE OPINII KLIENTÓW 📊",
                     description="Statystyki naszej pracy aktualizowane automatycznie.",
@@ -122,11 +103,9 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
                 stats_embed.add_field(name="Wszystkich opinii", value=f"📝 {count_reviews}", inline=True)
                 stats_embed.add_field(name="Potwierdzone transakcje (Legit)", value=f"✅ {count_legit}", inline=False)
                 
-                # Pasek postępu
                 progress_bar = "🟩" * int(round(avg_rating)) + "⬜" * (5 - int(round(avg_rating)))
                 stats_embed.add_field(name="Status satysfakcji", value=progress_bar, inline=False)
 
-                # 4. Edytujemy Twoją przypiętą wiadomość
                 try:
                     stats_message = await kanal.fetch_message(ID_WIADOMOSCI_STATS)
                     await stats_message.edit(content=None, embed=stats_embed)
@@ -141,15 +120,16 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
 def static_stars_count(val):
     return max(1, min(5, val))
 
-# --- 4. KOMENDA URUCHAMIAJĄCA OKNO OCENY ---
+# --- 3. KOMENDA URUCHAMIAJĄCA OKNO OCENY ---
 @bot.tree.command(name="ocen", description="Oceń naszą pracę")
 async def ocen(interaction: discord.Interaction):
     await interaction.response.send_modal(OcenaModal())
 
 
-# --- 5. START BOTA ---
+# --- 4. START BOTA ---
+# Token pobierany bezpośrednio ze zmiennych startowych hostingu
 token = os.environ.get("DISCORD_TOKEN")
 if token:
     bot.run(token)
 else:
-    print("Błąd: Brak DISCORD_TOKEN w zmiennych środowiskowych!")
+    print("Błąd: Brak DISCORD_TOKEN w parametrach startowych!")
