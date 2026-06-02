@@ -3,12 +3,15 @@ from discord import app_commands
 from discord.ext import commands
 import os
 
-# TUTAJ WPISZ ID SWOJEGO KANAŁU NA OCENY (usuń te cyfry i wklej swoje)
+# ID kanału na oceny (zostaje bez zmian)
 KANAL_OCEN_ID = 1511099870650302504 
 
 class Bot(commands.Bot):
     def __init__(self):
+        # Włączamy intents, żeby bot widział użytkowników i wiadomości do moderacji
         intents = discord.Intents.default()
+        intents.members = True
+        intents.message_content = True
         super().__init__(command_prefix="!", intents=intents)
 
     async def setup_hook(self):
@@ -17,11 +20,15 @@ class Bot(commands.Bot):
 
 bot = Bot()
 
+# ==============================================================================
+# 🌟 SYSTEM OCEN USŁUG (Zostaje i działa tak jak chciałeś)
+# ==============================================================================
+
 class ModalOpinii(discord.ui.Modal, title="Napisz swoją opinię"):
     opis = discord.ui.TextInput(
-        label="Co sądzisz o pomocy administratora?",
+        label="Co sądzisz o wykonanej usłudze/grafice?",
         style=discord.TextStyle.paragraph,
-        placeholder="Twoja opinia...",
+        placeholder="Twoja opinia o grafice, kontakcie itp...",
         required=True,
         max_length=300
     )
@@ -36,14 +43,14 @@ class ModalOpinii(discord.ui.Modal, title="Napisz swoją opinię"):
             await interaction.response.send_message("Błąd: Nie znaleziono kanału do wysyłania ocen!", ephemeral=True)
             return
 
-        embed = discord.Embed(title="⭐ Nowa Ocena Administratora ⭐", color=discord.Color.green())
-        embed.add_field(name="Oceniający", value=interaction.user.mention, inline=True)
-        embed.add_field(name="Ocena", value="⭐" * self.gwiazdki, inline=True)
-        embed.add_field(name="Opinia", value=self.opis.value, inline=False)
+        embed = discord.Embed(title="⭐ Nowa Ocena Usługi ⭐", color=discord.Color.purple())
+        embed.add_field(name="Zamawiający", value=interaction.user.mention, inline=True)
+        embed.add_field(name="Ocena wykonania", value="⭐" * self.gwiazdki, inline=True)
+        embed.add_field(name="Opinia klienta", value=self.opis.value, inline=False)
         embed.set_thumbnail(url=interaction.user.display_avatar.url)
 
         await kanal_ocen.send(embed=embed)
-        await interaction.response.send_message("Dziękujemy za wystawienie oceny!", ephemeral=True)
+        await interaction.response.send_message("Dziękujemy za wystawienie oceny za usługę!", ephemeral=True)
 
 class WidokOceny(discord.ui.View):
     def __init__(self):
@@ -72,18 +79,76 @@ class WidokOceny(discord.ui.View):
     async def star_5(self, interaction: discord.Interaction, button: discord.ui.Button):
         await self.obsluga_gwiazdki(interaction, 5)
 
+@bot.tree.command(name="ocena", description="Wysyła panel do oceny wykonanej usługi graficznej")
+@app_commands.checks.has_permissions(administrator=True)
+async def ocena(interaction: discord.Interaction):
+    embed = discord.Embed(
+        title="Oceń wykonanie naszej usługi!",
+        description="Kliknij odpowiednią liczbę gwiazdek poniżej, aby ocenić jakość zamówionej grafiki oraz kontakt z grafikiem.",
+        color=discord.Color.purple()
+    )
+    await interaction.response.send_message(embed=embed, view=WidokOceny())
+
+# ==============================================================================
+# 🔨 NOWE FUNKCJE SYSTEMOWE I MODERACYJNE (Twoje nowe centrum dowodzenia)
+# ==============================================================================
+
+# 1. CZYSZCZENIE CZATU (/clear)
+@bot.tree.command(name="clear", description="Czyści określoną liczbę wiadomości na kanale")
+@app_commands.checks.has_permissions(manage_messages=True)
+async def clear(interaction: discord.Interaction, ilosc: int):
+    if ilosc < 1:
+        await interaction.response.send_message("Musisz podać liczbę większą od 0!", ephemeral=True)
+        return
+    
+    await interaction.response.defer(ephemeral=True) # Żeby bot nie dostał laga przy usuwaniu
+    usuniete = await interaction.channel.purge(limit=ilosc)
+    await interaction.followup.send(f"Pomyślnie usunięto {len(usuniete)} wiadomości!", ephemeral=True)
+
+# 2. BANOWANIE (/ban)
+@bot.tree.command(name="ban", description="Banuje użytkownika z serwera")
+@app_commands.checks.has_permissions(ban_members=True)
+async def ban(interaction: discord.Interaction, uzytkownik: discord.Member, powod: str = "Brak podanego powodu"):
+    await uzytkownik.ban(reason=powod)
+    embed = discord.Embed(title="🔨 Użytkownik Zbanowany", color=discord.Color.red())
+    embed.add_field(name="Użytkownik", value=uzytkownik.mention, inline=True)
+    embed.add_field(name="Przez", value=interaction.user.mention, inline=True)
+    embed.add_field(name="Powód", value=powod, inline=False)
+    await interaction.response.send_message(embed=embed)
+
+# 3. WYRZUCANIE (/kick)
+@bot.tree.command(name="kick", description="Wyrzuca użytkownika z serwera")
+@app_commands.checks.has_permissions(kick_members=True)
+async def kick(interaction: discord.Interaction, uzytkownik: discord.Member, powod: str = "Brak podanego powodu"):
+    await uzytkownik.kick(reason=powod)
+    embed = discord.Embed(title="👢 Użytkownik Wyrzucony", color=discord.Color.orange())
+    embed.add_field(name="Użytkownik", value=uzytkownik.mention, inline=True)
+    embed.add_field(name="Przez", value=interaction.user.mention, inline=True)
+    embed.add_field(name="Powód", value=powod, inline=False)
+    await interaction.response.send_message(embed=embed)
+
+# 4. INFORMACJE O UŻYTKOWNIKU (/userinfo)
+@bot.tree.command(name="userinfo", description="Pokazuje informacje o danym użytkowniku")
+async def userinfo(interaction: discord.Interaction, uzytkownik: discord.Member = None):
+    uzytkownik = uzytkownik or interaction.user
+    embed = discord.Embed(title=f"👤 Informacje o {uzytkownik.name}", color=discord.Color.blue())
+    embed.set_thumbnail(url=uzytkownik.display_avatar.url)
+    embed.add_field(name="ID", value=uzytkownik.id, inline=True)
+    embed.add_field(name="Status na serwerze", value=uzytkownik.top_role.mention, inline=True)
+    embed.add_field(name="Dołączył do Discorda", value=uzytkownik.created_at.strftime("%d.%m.%Y"), inline=True)
+    embed.add_field(name="Dołączył do serwera", value=uzytkownik.joined_at.strftime("%d.%m.%Y"), inline=True)
+    await interaction.response.send_message(embed=embed)
+
+# ==============================================================================
+# 🚀 URUCHOMIENIE BOTA
+# ==============================================================================
+
 @bot.event
 async def on_ready():
     print(f'Zalogowano jako {bot.user.name}')
 
-@bot.tree.command(name="ocena", description="Wysyła panel do oceny pracy administracji")
-@app_commands.checks.has_permissions(administrator=True)
-async def ocena(interaction: discord.Interaction):
-    embed = discord.Embed(
-        title="Oceń pracę naszej administracji!",
-        description="Kliknij odpowiednią liczbę gwiazdek poniżej, aby ocenić pomoc, którą otrzymałeś w tym tickecie.",
-        color=discord.Color.blue()
-    )
-    await interaction.response.send_message(embed=embed, view=WidokOceny())
-
-bot.run(os.environ.get("DISCORD_TOKEN"))
+token = os.environ.get("DISCORD_TOKEN")
+if token:
+    bot.run(token)
+else:
+    print("BŁĄD: Brak tokenu DISCORD_TOKEN w zmiennych środowiskowych!")
