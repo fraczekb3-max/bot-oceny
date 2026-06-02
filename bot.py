@@ -86,12 +86,27 @@ class OcenaModal(discord.ui.Modal, title="Jak oceniasz naszą pracę?"):
         ID_KANALU_OCEN = 1511099870650302504  
 
         try:
-            # Szukamy kanału po podanym ID
             kanal = interaction.client.get_channel(ID_KANALU_OCEN)
             if kanal:
-                # Wysyłamy ramkę na publiczny kanał ocen
+                # Wysyłamy ocenę na publiczny kanał ocen
                 await kanal.send(embed=embed)
-                # Dyskretna informacja dla klienta w tickecie
+                # Dyskretna odpowiedź dla klienta w tickecie
                 await interaction.response.send_message("Dziękujemy za opinię! Twoja ocena została opublikowana na kanale z ocenami.", ephemeral=True)
             else:
-                await
+                await interaction.response.send_message("Błąd: Nie znaleziono kanału o podanym ID. Upewnij się, że bot ma do niego dostęp.", ephemeral=True)
+        except Exception as e:
+            await interaction.response.send_message(f"Wystąpił problem podczas wysyłania: {e}", ephemeral=True)
+
+
+# --- 4. KOMENDA URUCHAMIAJĄCA OKNO OCENY ---
+@bot.tree.command(name="ocen", description="Oceń naszą pracę")
+async def ocen(interaction: discord.Interaction):
+    await interaction.response.send_modal(OcenaModal())
+
+
+# --- 5. START BOTA ---
+token = os.environ.get("DISCORD_TOKEN")
+if token:
+    bot.run(token)
+else:
+    print("Błąd: Brak DISCORD_TOKEN w zmiennych środowiskowych!")
