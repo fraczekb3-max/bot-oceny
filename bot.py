@@ -1,3 +1,19 @@
+from flask import Flask
+import threading
+import os
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot działa!"
+
+def run_flask():
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port)
+
+# Odpalamy mini-serwer w osobnym wątku, żeby nie blokował bota
+threading.Thread(target=run_flask).start()
 import discord
 from discord import app_commands
 from discord.ext import commands
