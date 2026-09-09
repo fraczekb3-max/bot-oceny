@@ -223,7 +223,7 @@
     .server-item img {
       width: 26px;
       height: 26px;
-      border-radius: 50%;
+      border-radius: 6px;
       object-fit: cover;
     }
 
@@ -327,10 +327,25 @@
       gap: 20px;
     }
 
-    .server-hero-info h2 {
+    .server-hero-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .server-hero-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .server-hero-text h2 {
       font-size: 2.2rem;
       font-weight: 800;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       color: #fff;
     }
 
@@ -379,7 +394,7 @@
       background: linear-gradient(135deg, #0284c7, #0369a1);
     }
 
-    /* PACZKI GRID - MNIEJSZE KWADRATY, UKŁAD W SIATCE */
+    /* PACZKI GRID */
     .pack-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 340px));
@@ -446,7 +461,7 @@
       padding-top: 12px;
     }
 
-    /* WYSUWANE OKNO PODGLĄDU (MODAL) */
+    /* MODAL PODGLĄDU */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -712,11 +727,11 @@
     <!-- Pasek Serwerów na dole -->
     <div class="servers-bar">
       <div class="server-item" onclick="showSection('anarchia-section')">
-        <img src="https://i.imgur.com/G9ru8n0.png" alt="Anarchia">
+        <img src="https://i.imgur.com/5zdjpWE.png" alt="Anarchia">
         <span>Anarchia GG</span>
       </div>
       <div class="server-item" onclick="showSection('minestar-section')">
-        <img src="https://i.imgur.com/gcE2omD.jpeg" alt="Minestar">
+        <img src="https://i.imgur.com/f2W0IET.png" alt="Minestar">
         <span>Minestar GG</span>
       </div>
       <div class="server-item" onclick="showSection('inne-section')">
@@ -735,14 +750,14 @@
 
     <div class="folder-grid">
       <div class="folder-card" onclick="showSection('anarchia-section')">
-        <img src="https://i.imgur.com/G9ru8n0.png" alt="Anarchia.GG">
+        <img src="https://i.imgur.com/5zdjpWE.png" alt="Anarchia.GG">
         <h2>Anarchia.GG</h2>
         <p>Resource packi zoptymalizowane pod tryb Anarchia</p>
       </div>
 
       <div class="folder-card" onclick="showSection('minestar-section')">
-        <img src="https://i.imgur.com/gcE2omD.jpeg" alt="Minestar.GG">
-        <h2>Minestar.GG</h2>
+        <img src="https://i.imgur.com/f2W0IET.png" alt="Minestar.gg">
+        <h2>Minestar.gg</h2>
         <p>Paczki dopasowane pod rozgrywkę na Minestar</p>
       </div>
 
@@ -762,15 +777,18 @@
 
     <div class="server-hero-card">
       <div class="server-hero-info">
-        <h2>Anarchia.GG</h2>
-        <div class="server-ip-large">
-          Oficjalny Adres IP: <strong>ANARCHIA.GG</strong>
+        <img src="https://i.imgur.com/5zdjpWE.png" alt="Anarchia.GG" class="server-hero-logo">
+        <div class="server-hero-text">
+          <h2>Anarchia.GG</h2>
+          <div class="server-ip-large">
+            Oficjalny Adres IP: <strong>ANARCHIA.GG</strong>
+          </div>
         </div>
       </div>
       <div class="action-btns-large">
         <button class="btn-action-lg purple" onclick="copyIP('ANARCHIA.GG', this)">📋 Kopiuj IP</button>
         <a href="https://anarchia.gg/" target="_blank" class="btn-action-lg">🛒 Sklep</a>
-        <a href="https://discord.gg/anarchia" target="_blank" class="btn-action-lg">💬 Discord</a>
+        <a href="#" class="btn-action-lg">💬 Discord</a>
       </div>
     </div>
 
@@ -798,15 +816,18 @@
 
     <div class="server-hero-card">
       <div class="server-hero-info">
-        <h2>Minestar.GG</h2>
-        <div class="server-ip-large">
-          Oficjalny Adres IP: <strong>Minestar.gg</strong>
+        <img src="https://i.imgur.com/f2W0IET.png" alt="Minestar.gg" class="server-hero-logo">
+        <div class="server-hero-text">
+          <h2>Minestar.gg</h2>
+          <div class="server-ip-large">
+            Oficjalny Adres IP: <strong>Minestar.gg</strong>
+          </div>
         </div>
       </div>
       <div class="action-btns-large">
         <button class="btn-action-lg purple" onclick="copyIP('Minestar.gg', this)">📋 Kopiuj IP</button>
         <a href="https://minestar.gg/" target="_blank" class="btn-action-lg">🛒 Sklep</a>
-        <a href="https://discord.gg/minestar" target="_blank" class="btn-action-lg">💬 Discord</a>
+        <a href="#" class="btn-action-lg">💬 Discord</a>
       </div>
     </div>
 
@@ -823,9 +844,11 @@
 
     <div class="server-hero-card">
       <div class="server-hero-info">
-        <h2>Pozostałe Paczki</h2>
-        <div class="server-ip-large">
-          Uniwersalne paczki tekstur dla każdego trybu
+        <div class="server-hero-text">
+          <h2>Pozostałe Paczki</h2>
+          <div class="server-ip-large">
+            Uniwersalne paczki tekstur dla każdego trybu
+          </div>
         </div>
       </div>
     </div>
