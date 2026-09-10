@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Xenon TxT - Minecraft Texture Packs</title>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/v41E0iC.png">
   
   <style>
     /* Reset i podstawowe style */
@@ -794,7 +795,7 @@
   <!-- Nawigacja -->
   <nav>
     <div class="logo" onclick="showSection('home-section')">
-      <img src="https://i.imgur.com/QxWlqmw.png" alt="Xenon Logo" class="logo-icon">
+      <img src="https://i.imgur.com/v41E0iC.png" alt="Xenon Logo" class="logo-icon">
       <span>Xenon TxT</span>
     </div>
 
@@ -909,7 +910,7 @@
     </div>
 
     <div class="pack-grid">
-      <!-- PACZKA: FIOLETOWA SKLEJKA (Zaktualizowane zdjęcia) -->
+      <!-- PACZKA: FIOLETOWA SKLEJKA -->
       <div class="pack-card" data-title="fioletowa sklejka loxe_3 lifesteal">
         <img src="https://i.imgur.com/rIiA6eU.png" alt="Fioletowa sklejka" onclick="openModal('Fioletowa sklejka', ['https://i.imgur.com/rIiA6eU.png', 'https://i.imgur.com/NyZTKSy.png', 'https://i.imgur.com/izIKirU.png', 'https://i.imgur.com/okMWnz0.png'], 'luzna sklejka', 'loxe_3', 'lifesteal, pvp', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">
         <div class="pack-card-body">
@@ -1074,8 +1075,8 @@
 
   <script>
     /* ======================================================
-       SKRYPT NIEBIESKIEJ SMUGI / MGIEŁKI KURSORA (GLOW TRAIL)
-       ====================================================== */
+        SKRYPT NIEBIESKIEJ SMUGI / MGIEŁKI KURSORA (GLOW TRAIL)
+        ====================================================== */
     const canvas = document.getElementById('trail-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -1133,85 +1134,81 @@
           e.clientY + (Math.random() - 0.5) * 10
         ));
       }
-
       if (particles.length > maxParticles) {
-        particles.shift();
+        particles.splice(0, particles.length - maxParticles);
       }
     });
 
-    function animate() {
+    function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = 0; i < particles.length; i++) {
+      for (let i = particles.length - 1; i >= 0; i--) {
         particles[i].update();
         particles[i].draw();
-
-        if (particles[i].alpha <= 0) {
+        if (particles[i].alpha <= 0 || particles[i].size <= 0) {
           particles.splice(i, 1);
-          i--;
         }
       }
-
-      requestAnimationFrame(animate);
+      requestAnimationFrame(animateParticles);
     }
-    animate();
-
+    animateParticles();
 
     /* ======================================================
-       GŁÓWNA LOGIKA STRONY
-       ====================================================== */
+        LOGIKA NAWIGACJI I MODALI
+        ====================================================== */
     function showSection(sectionId) {
-      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(sec => {
+        sec.classList.remove('active');
+      });
       document.getElementById(sectionId).classList.add('active');
 
-      document.getElementById('nav-home').classList.remove('active');
-      document.getElementById('nav-categories').classList.remove('active');
-
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+      });
       if (sectionId === 'home-section') {
-        document.getElementById('nav-home').classList.add('active');
-      } else {
-        document.getElementById('nav-categories').classList.add('active');
+        const homeLink = document.getElementById('nav-home');
+        if (homeLink) homeLink.classList.add('active');
+      } else if (sectionId === 'categories-section' || sectionId.includes('-section')) {
+        const catLink = document.getElementById('nav-categories');
+        if (catLink) catLink.classList.add('active');
       }
-
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function copyIP(ipText, btnElement) {
-      navigator.clipboard.writeText(ipText).then(() => {
-        const originalText = btnElement.innerText;
-        btnElement.innerText = '✔ Skopiowano!';
-        setTimeout(() => {
-          btnElement.innerText = originalText;
-        }, 2000);
-      });
-    }
+    let currentImages = [];
+    let currentImageIndex = 0;
 
-    function openModal(title, imagesInput, description, author, tagsString, server, version, downloadUrl) {
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalDesc').innerText = description;
-      document.getElementById('modalAuthor').innerText = author;
-      document.getElementById('modalServer').innerText = server;
-      document.getElementById('modalVersion').innerText = version;
+    function openModal(title, images, desc, author, tags, server, version, downloadUrl) {
+      currentImages = images;
+      currentImageIndex = 0;
+
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalImg').src = currentImages[0];
+      document.getElementById('modalDesc').textContent = desc;
+      document.getElementById('modalAuthor').textContent = author;
+      document.getElementById('modalServer').textContent = server;
+      document.getElementById('modalVersion').textContent = version;
       document.getElementById('modalDownload').href = downloadUrl;
 
-      // Obsługa pojedynczego obrazka lub tablicy obrazków
-      let images = Array.isArray(imagesInput) ? imagesInput : [imagesInput];
-      
-      const mainImg = document.getElementById('modalImg');
-      mainImg.src = images[0];
+      const tagsContainer = document.getElementById('modalTags');
+      tagsContainer.innerHTML = '';
+      tags.split(',').forEach(tag => {
+        const span = document.createElement('span');
+        span.className = 'modal-tag';
+        span.textContent = tag.trim();
+        tagsContainer.appendChild(span);
+      });
 
-      // Generowanie miniaturek w modalu do przełączania zdjęć
       const thumbsContainer = document.getElementById('modalGalleryThumbs');
       thumbsContainer.innerHTML = '';
-      
-      if (images.length > 1) {
+      if (currentImages.length > 1) {
         thumbsContainer.style.display = 'flex';
-        images.forEach((imgSrc, index) => {
+        currentImages.forEach((imgSrc, index) => {
           const thumb = document.createElement('img');
           thumb.src = imgSrc;
           thumb.className = 'modal-thumb' + (index === 0 ? ' active' : '');
           thumb.onclick = () => {
-            mainImg.src = imgSrc;
+            currentImageIndex = index;
+            document.getElementById('modalImg').src = imgSrc;
             document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
             thumb.classList.add('active');
           };
@@ -1221,16 +1218,6 @@
         thumbsContainer.style.display = 'none';
       }
 
-      const tagsContainer = document.getElementById('modalTags');
-      tagsContainer.innerHTML = '';
-      const tagsArray = tagsString.split(',');
-      tagsArray.forEach(tag => {
-        const span = document.createElement('span');
-        span.className = 'modal-tag';
-        span.innerText = tag.trim();
-        tagsContainer.appendChild(span);
-      });
-
       document.getElementById('modalOverlay').classList.add('active');
     }
 
@@ -1238,13 +1225,9 @@
       document.getElementById('modalOverlay').classList.remove('active');
     }
 
-    document.getElementById('modalOverlay').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
-
     function openLightbox() {
-      const currentSrc = document.getElementById('modalImg').src;
-      document.getElementById('lightboxImg').src = currentSrc;
+      const activeImgSrc = document.getElementById('modalImg').src;
+      document.getElementById('lightboxImg').src = activeImgSrc;
       document.getElementById('lightboxOverlay').classList.add('active');
     }
 
@@ -1252,12 +1235,17 @@
       document.getElementById('lightboxOverlay').classList.remove('active');
     }
 
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeLightbox();
-        closeModal();
-      }
-    });
+    function copyIP(text, btnElement) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btnElement.innerHTML;
+        btnElement.innerHTML = '✔ Skopiowano!';
+        btnElement.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+        setTimeout(() => {
+          btnElement.innerHTML = originalText;
+          btnElement.style.background = '';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>
