@@ -75,7 +75,7 @@
     .nav-links {
       display: flex;
       gap: 10px;
-      background: rgba(13, 17, 26,  0.7);
+      background: rgba(13, 17, 26, 0.7);
       padding: 6px 14px;
       border-radius: 30px;
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -153,12 +153,39 @@
       max-width: 650px;
       font-size: 1.1rem;
       line-height: 1.6;
-      margin-bottom: 40px;
+      margin-bottom: 25px;
+    }
+
+    /* Styl tekstu z zachętą i wbudowaną ikonką Discorda */
+    .hero-discord-text {
+      color: #9ca3af;
+      max-width: 650px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-discord-text img.discord-inline-icon {
+      height: 28px;
+      vertical-align: middle;
+      cursor: pointer;
+      transition: transform 0.2s, filter 0.2s;
+    }
+
+    .hero-discord-text img.discord-inline-icon:hover {
+      transform: scale(1.08);
+      filter: drop-shadow(0 0 10px rgba(88, 101, 242, 0.6));
     }
 
     .hero-buttons {
       display: flex;
       justify-content: center;
+      margin-bottom: 50px;
     }
 
     .btn-primary {
@@ -197,7 +224,7 @@
       transform: translateY(-1px);
     }
 
-    /* Pasek Serwerów */
+    /* Pasek Serwerów na dole strony głównej */
     .servers-bar {
       margin-top: 70px;
       width: 100%;
@@ -205,7 +232,7 @@
       padding-top: 35px;
       display: flex;
       justify-content: center;
-      gap: 30px;
+      gap: 20px;
       flex-wrap: wrap;
     }
 
@@ -254,25 +281,6 @@
       color: #fff;
       text-align: center;
       letter-spacing: -0.5px;
-    }
-
-    .search-input {
-      width: 100%;
-      max-width: 450px;
-      background: rgba(13, 17, 26, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 14px 20px;
-      border-radius: 14px;
-      color: #fff;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-    }
-
-    .search-input:focus {
-      border-color: #0ea5e9;
-      box-shadow: 0 0 20px rgba(14, 165, 233, 0.25), inset 0 2px 4px rgba(0,0,0,0.3);
     }
 
     .folder-grid {
@@ -782,6 +790,14 @@
         Wybieraj z najlepszych, w pełni zoptymalizowanych paczek zasobów. Zwiększ swoje FPS-y, popraw widoczność w walce i zyskaj przewagę na każdym serwerze!
       </p>
 
+      <!-- Pełny tekst z zachętą i poprawnie wbudowaną ikonką Discorda -->
+      <div class="hero-discord-text">
+        Chcesz dodać własną paczkę na stronę? Dołącz teraz na 
+        <a href="https://discord.gg/ArpKXfHWZv" target="_blank">
+          <img src="https://i.imgur.com/MnqAhLk.png" alt="Discord" class="discord-inline-icon">
+        </a>
+      </div>
+
       <div class="hero-buttons">
         <button class="btn-primary" onclick="showSection('categories-section')">Przeglądaj Paczki</button>
       </div>
@@ -797,18 +813,17 @@
         <img src="https://i.imgur.com/f2W0IET.png" alt="Minestar">
         <span>Minestar GG</span>
       </div>
-      <div class="server-item" onclick="showSection('inne-section')">
-        <span style="font-size: 1.2rem;">📂</span>
-        <span>Pozostałe TxT</span>
+      <div class="server-item" onclick="showSection('rapy-section')">
+        <img src="https://i.imgur.com/0y4sFLI.png" alt="Rapy">
+        <span>RAPY.GG</span>
       </div>
     </div>
   </div>
 
-  <!-- KATEGORIE -->
+  <!-- KATEGORIE (wyszukiwarka i lupa całkowicie usunięte) -->
   <div class="section" id="categories-section">
     <div class="section-header">
       <h2 class="grid-title">Wybierz Kategorię</h2>
-      <input type="text" id="searchInput" class="search-input" placeholder="🔍 Szukaj paczki lub serwera..." onkeyup="filterPacks()">
     </div>
 
     <div class="folder-grid">
@@ -822,6 +837,18 @@
         <img src="https://i.imgur.com/f2W0IET.png" alt="Minestar.gg">
         <h2>Minestar.gg</h2>
         <p>Paczki dopasowane pod rozgrywkę na Minestar</p>
+      </div>
+
+      <div class="folder-card" onclick="showSection('rapy-section')">
+        <img src="https://i.imgur.com/0y4sFLI.png" alt="RAPY.GG">
+        <h2>RAPY.GG</h2>
+        <p>Paczki dedykowane na serwer RAPY.GG</p>
+      </div>
+
+      <div class="folder-card" onclick="showSection('szefy-section')">
+        <img src="https://i.imgur.com/V2p0rbT.png" alt="Szefy.pl">
+        <h2>Szefy.pl</h2>
+        <p>Paczki dedykowane na serwer Szefy.pl</p>
       </div>
 
       <div class="folder-card" onclick="showSection('inne-section')">
@@ -894,9 +921,59 @@
       </div>
     </div>
 
-    <div class="pack-grid">
-      <!-- Puste, gotowe na paczki Minestar -->
+    <div class="pack-grid"></div>
+  </div>
+
+  <!-- PODKATEGORIA: RAPY.GG -->
+  <div class="section" id="rapy-section">
+    <div class="top-bar-large">
+      <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
     </div>
+
+    <div class="server-hero-card">
+      <div class="server-hero-info">
+        <img src="https://i.imgur.com/0y4sFLI.png" alt="RAPY.GG" class="server-hero-logo">
+        <div class="server-hero-text">
+          <h2>RAPY.GG <span class="status-badge"><span class="status-dot"></span> Online</span></h2>
+          <div class="server-ip-large">
+            Oficjalny Adres IP: <strong>rapy.gg</strong>
+          </div>
+        </div>
+      </div>
+      <div class="action-btns-large">
+        <button class="btn-action-lg purple" onclick="copyIP('rapy.gg', this)">📋 Kopiuj IP</button>
+        <a href="https://rapy.gg" target="_blank" class="btn-action-lg">🛒 Sklep</a>
+        <a href="https://discord.com/invite/ZEJzue9TAy" target="_blank" class="btn-action-lg">💬 Discord</a>
+      </div>
+    </div>
+
+    <div class="pack-grid"></div>
+  </div>
+
+  <!-- PODKATEGORIA: SZEFY.PL -->
+  <div class="section" id="szefy-section">
+    <div class="top-bar-large">
+      <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
+    </div>
+
+    <div class="server-hero-card">
+      <div class="server-hero-info">
+        <img src="https://i.imgur.com/V2p0rbT.png" alt="Szefy.pl" class="server-hero-logo">
+        <div class="server-hero-text">
+          <h2>Szefy.pl <span class="status-badge"><span class="status-dot"></span> Online</span></h2>
+          <div class="server-ip-large">
+            Oficjalny Adres IP: <strong>szefy.pl</strong>
+          </div>
+        </div>
+      </div>
+      <div class="action-btns-large">
+        <button class="btn-action-lg purple" onclick="copyIP('szefy.pl', this)">📋 Kopiuj IP</button>
+        <a href="https://szefy.pl" target="_blank" class="btn-action-lg">🛒 Sklep</a>
+        <a href="https://discord.com/invite/wR7QAyyB5M" target="_blank" class="btn-action-lg">💬 Discord</a>
+      </div>
+    </div>
+
+    <div class="pack-grid"></div>
   </div>
 
   <!-- PODKATEGORIA: INNE -->
@@ -916,9 +993,7 @@
       </div>
     </div>
 
-    <div class="pack-grid">
-      <!-- Puste, gotowe na inne paczki -->
-    </div>
+    <div class="pack-grid"></div>
   </div>
 
   <!-- MODAL PODGLĄDU -->
@@ -1079,20 +1154,6 @@
         setTimeout(() => {
           btnElement.innerText = originalText;
         }, 2000);
-      });
-    }
-
-    function filterPacks() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const packs = document.querySelectorAll('.pack-card');
-
-      packs.forEach(pack => {
-        const title = pack.getAttribute('data-title');
-        if (title.includes(query)) {
-          pack.style.display = 'flex';
-        } else {
-          pack.style.display = 'none';
-        }
       });
     }
 
