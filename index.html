@@ -691,6 +691,32 @@
       margin-bottom: 25px;
     }
 
+    /* GALERIA MINIATUR W MODALU */
+    .modal-gallery-thumbs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .modal-thumb {
+      width: 60px;
+      height: 45px;
+      border-radius: 8px;
+      object-fit: cover;
+      cursor: pointer;
+      opacity: 0.6;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: opacity 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .modal-thumb:hover, .modal-thumb.active {
+      opacity: 1;
+      border-color: #0ea5e9;
+      transform: scale(1.05);
+    }
+
     /* PEŁNOEKRANOWA GALERIA ZDJĘĆ */
     .lightbox-overlay {
       position: fixed;
@@ -820,7 +846,7 @@
     </div>
   </div>
 
-  <!-- KATEGORIE (wyszukiwarka i lupa całkowicie usunięte) -->
+  <!-- KATEGORIE -->
   <div class="section" id="categories-section">
     <div class="section-header">
       <h2 class="grid-title">Wybierz Kategorię</h2>
@@ -883,14 +909,14 @@
     </div>
 
     <div class="pack-grid">
-      <!-- PACZKA: FIOLETOWA SKLEJKA -->
+      <!-- PACZKA: FIOLETOWA SKLEJKA (Zaktualizowane zdjęcia) -->
       <div class="pack-card" data-title="fioletowa sklejka loxe_3 lifesteal">
-        <img src="https://i.imgur.com/xkXU5Na.png" alt="Fioletowa sklejka" onclick="openModal('Fioletowa sklejka', 'https://i.imgur.com/xkXU5Na.png', 'luzna sklejka', 'loxe_3', 'lifesteal', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">
+        <img src="https://i.imgur.com/rIiA6eU.png" alt="Fioletowa sklejka" onclick="openModal('Fioletowa sklejka', ['https://i.imgur.com/rIiA6eU.png', 'https://i.imgur.com/NyZTKSy.png', 'https://i.imgur.com/izIKirU.png', 'https://i.imgur.com/okMWnz0.png'], 'luzna sklejka', 'loxe_3', 'lifesteal, pvp', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">
         <div class="pack-card-body">
           <span class="pack-badge">lifesteal</span>
           <h3>Fioletowa sklejka</h3>
           <div class="pack-card-actions">
-            <button class="btn-secondary" style="flex: 1;" onclick="openModal('Fioletowa sklejka', 'https://i.imgur.com/xkXU5Na.png', 'luzna sklejka', 'loxe_3', 'lifesteal', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">Podgląd</button>
+            <button class="btn-secondary" style="flex: 1;" onclick="openModal('Fioletowa sklejka', ['https://i.imgur.com/rIiA6eU.png', 'https://i.imgur.com/NyZTKSy.png', 'https://i.imgur.com/izIKirU.png', 'https://i.imgur.com/okMWnz0.png'], 'luzna sklejka', 'loxe_3', 'lifesteal, pvp', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">Podgląd</button>
             <a href="https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
           </div>
         </div>
@@ -1007,6 +1033,9 @@
         <img id="modalImg" src="" alt="Podgląd">
         <div class="modal-img-hint">🔍 Kliknij, aby powiększyć</div>
       </div>
+
+      <!-- Kontener na miniatury wielu zdjęć -->
+      <div class="modal-gallery-thumbs" id="modalGalleryThumbs"></div>
 
       <div class="modal-details-grid">
         <div class="detail-item">
@@ -1157,14 +1186,40 @@
       });
     }
 
-    function openModal(title, imgSrc, description, author, tagsString, server, version, downloadUrl) {
+    function openModal(title, imagesInput, description, author, tagsString, server, version, downloadUrl) {
       document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalImg').src = imgSrc;
       document.getElementById('modalDesc').innerText = description;
       document.getElementById('modalAuthor').innerText = author;
       document.getElementById('modalServer').innerText = server;
       document.getElementById('modalVersion').innerText = version;
       document.getElementById('modalDownload').href = downloadUrl;
+
+      // Obsługa pojedynczego obrazka lub tablicy obrazków
+      let images = Array.isArray(imagesInput) ? imagesInput : [imagesInput];
+      
+      const mainImg = document.getElementById('modalImg');
+      mainImg.src = images[0];
+
+      // Generowanie miniaturek w modalu do przełączania zdjęć
+      const thumbsContainer = document.getElementById('modalGalleryThumbs');
+      thumbsContainer.innerHTML = '';
+      
+      if (images.length > 1) {
+        thumbsContainer.style.display = 'flex';
+        images.forEach((imgSrc, index) => {
+          const thumb = document.createElement('img');
+          thumb.src = imgSrc;
+          thumb.className = 'modal-thumb' + (index === 0 ? ' active' : '');
+          thumb.onclick = () => {
+            mainImg.src = imgSrc;
+            document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+          };
+          thumbsContainer.appendChild(thumb);
+        });
+      } else {
+        thumbsContainer.style.display = 'none';
+      }
 
       const tagsContainer = document.getElementById('modalTags');
       tagsContainer.innerHTML = '';
