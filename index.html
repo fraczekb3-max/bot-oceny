@@ -157,7 +157,6 @@
       margin-bottom: 25px;
     }
 
-    /* Styl tekstu z zachętą i wbudowaną ikonką Discorda */
     .hero-discord-text {
       color: #9ca3af;
       max-width: 650px;
@@ -225,7 +224,7 @@
       transform: translateY(-1px);
     }
 
-    /* Pasek Serwerów na dole strony głównej */
+    /* Pasek Serwerów */
     .servers-bar {
       margin-top: 70px;
       width: 100%;
@@ -383,7 +382,6 @@
       gap: 12px;
     }
 
-    /* Pulsujący status online */
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -512,14 +510,21 @@
       color: #fff;
     }
 
-    .pack-badge {
+    /* Kontener na wiele badge'ów */
+    .pack-badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
       align-self: flex-start;
+    }
+
+    .pack-badge {
       font-size: 0.72rem;
       padding: 4px 10px;
       background: rgba(255, 255, 255, 0.15);
       color: #ffffff;
       border-radius: 8px;
-      margin-bottom: 14px;
       font-weight: 600;
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
@@ -693,7 +698,6 @@
       margin-bottom: 25px;
     }
 
-    /* GALERIA MINIATUR W MODALU */
     .modal-gallery-thumbs {
       display: flex;
       gap: 10px;
@@ -719,7 +723,6 @@
       transform: scale(1.05);
     }
 
-    /* PEŁNOEKRANOWA GALERIA ZDJĘĆ */
     .lightbox-overlay {
       position: fixed;
       inset: 0;
@@ -790,10 +793,8 @@
 </head>
 <body>
 
-  <!-- Canvas dla białej mgiełki / smugi -->
   <canvas id="trail-canvas"></canvas>
 
-  <!-- Nawigacja -->
   <nav>
     <div class="logo" onclick="showSection('home-section')">
       <img src="https://i.imgur.com/v41E0iC.png" alt="Xenon Logo" class="logo-icon">
@@ -818,7 +819,6 @@
         Wybieraj z najlepszych, w pełni zoptymalizowanych paczek zasobów. Zwiększ swoje FPS-y, popraw widoczność w walce i zyskaj przewagę na każdym serwerze!
       </p>
 
-      <!-- Pełny tekst z zachętą i poprawnie wbudowaną ikonką Discorda -->
       <div class="hero-discord-text">
         Chcesz dodać własną paczkę na stronę? Dołącz teraz na 
         <a href="https://discord.gg/ArpKXfHWZv" target="_blank">
@@ -831,7 +831,6 @@
       </div>
     </div>
 
-    <!-- Pasek Serwerów na dole -->
     <div class="servers-bar">
       <div class="server-item" onclick="showSection('anarchia-section')">
         <img src="https://i.imgur.com/5zdjpWE.png" alt="Anarchia">
@@ -915,11 +914,45 @@
       <div class="pack-card" data-title="fioletowa sklejka loxe_3 lifesteal">
         <img src="https://i.imgur.com/rIiA6eU.png" alt="Fioletowa sklejka" onclick="openModal('Fioletowa sklejka', ['https://i.imgur.com/rIiA6eU.png', 'https://i.imgur.com/NyZTKSy.png', 'https://i.imgur.com/izIKirU.png', 'https://i.imgur.com/okMWnz0.png'], 'luzna sklejka', 'loxe_3', 'lifesteal, pvp', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">
         <div class="pack-card-body">
-          <span class="pack-badge">lifesteal</span>
+          <div class="pack-badges">
+            <span class="pack-badge">LIFESTEAL</span>
+          </div>
           <h3>Fioletowa sklejka</h3>
           <div class="pack-card-actions">
             <button class="btn-secondary" style="flex: 1;" onclick="openModal('Fioletowa sklejka', ['https://i.imgur.com/rIiA6eU.png', 'https://i.imgur.com/NyZTKSy.png', 'https://i.imgur.com/izIKirU.png', 'https://i.imgur.com/okMWnz0.png'], 'luzna sklejka', 'loxe_3', 'lifesteal, pvp', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">Podgląd</button>
             <a href="https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PACZKA: NIEBIESKA -->
+      <div class="pack-card" data-title="niebieska xenon lifesteal boxpvp">
+        <img src="https://i.imgur.com/ShxgpIN.png" alt="Niebieska" onclick="openModal('Niebieska', ['https://i.imgur.com/ShxgpIN.png', 'https://i.imgur.com/9rqHSFe.png', 'https://i.imgur.com/OnOa8Uf.png', 'https://i.imgur.com/NNt03aR.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Anarchia.GG', '1.21 +', 'https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file')">
+        <div class="pack-card-body">
+          <div class="pack-badges">
+            <span class="pack-badge">LIFESTEAL</span>
+            <span class="pack-badge">BOXPVP</span>
+          </div>
+          <h3>Niebieska</h3>
+          <div class="pack-card-actions">
+            <button class="btn-secondary" style="flex: 1;" onclick="openModal('Niebieska', ['https://i.imgur.com/ShxgpIN.png', 'https://i.imgur.com/9rqHSFe.png', 'https://i.imgur.com/OnOa8Uf.png', 'https://i.imgur.com/NNt03aR.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Anarchia.GG', '1.21 +', 'https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file')">Podgląd</button>
+            <a href="https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PACZKA: RED -->
+      <div class="pack-card" data-title="red xenon lifesteal boxpvp">
+        <img src="https://i.imgur.com/OsP6VJ2.png" alt="Red" onclick="openModal('Red', ['https://i.imgur.com/OsP6VJ2.png', 'https://i.imgur.com/8vWX7jz.png', 'https://i.imgur.com/EDDxBzh.png', 'https://i.imgur.com/p6H6ijt.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Anarchia.GG', '1.21 +', 'https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file')">
+        <div class="pack-card-body">
+          <div class="pack-badges">
+            <span class="pack-badge">LIFESTEAL</span>
+            <span class="pack-badge">BOXPVP</span>
+          </div>
+          <h3>Red</h3>
+          <div class="pack-card-actions">
+            <button class="btn-secondary" style="flex: 1;" onclick="openModal('Red', ['https://i.imgur.com/OsP6VJ2.png', 'https://i.imgur.com/8vWX7jz.png', 'https://i.imgur.com/EDDxBzh.png', 'https://i.imgur.com/p6H6ijt.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Anarchia.GG', '1.21 +', 'https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file')">Podgląd</button>
+            <a href="https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
           </div>
         </div>
       </div>
@@ -949,7 +982,39 @@
       </div>
     </div>
 
-    <div class="pack-grid"></div>
+    <div class="pack-grid">
+      <!-- PACZKA: NIEBIESKA -->
+      <div class="pack-card" data-title="niebieska xenon lifesteal boxpvp">
+        <img src="https://i.imgur.com/ShxgpIN.png" alt="Niebieska" onclick="openModal('Niebieska', ['https://i.imgur.com/ShxgpIN.png', 'https://i.imgur.com/9rqHSFe.png', 'https://i.imgur.com/OnOa8Uf.png', 'https://i.imgur.com/NNt03aR.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Minestar.gg', '1.21 +', 'https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file')">
+        <div class="pack-card-body">
+          <div class="pack-badges">
+            <span class="pack-badge">LIFESTEAL</span>
+            <span class="pack-badge">BOXPVP</span>
+          </div>
+          <h3>Niebieska</h3>
+          <div class="pack-card-actions">
+            <button class="btn-secondary" style="flex: 1;" onclick="openModal('Niebieska', ['https://i.imgur.com/ShxgpIN.png', 'https://i.imgur.com/9rqHSFe.png', 'https://i.imgur.com/OnOa8Uf.png', 'https://i.imgur.com/NNt03aR.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Minestar.gg', '1.21 +', 'https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file')">Podgląd</button>
+            <a href="https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PACZKA: RED -->
+      <div class="pack-card" data-title="red xenon lifesteal boxpvp">
+        <img src="https://i.imgur.com/OsP6VJ2.png" alt="Red" onclick="openModal('Red', ['https://i.imgur.com/OsP6VJ2.png', 'https://i.imgur.com/8vWX7jz.png', 'https://i.imgur.com/EDDxBzh.png', 'https://i.imgur.com/p6H6ijt.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Minestar.gg', '1.21 +', 'https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file')">
+        <div class="pack-card-body">
+          <div class="pack-badges">
+            <span class="pack-badge">LIFESTEAL</span>
+            <span class="pack-badge">BOXPVP</span>
+          </div>
+          <h3>Red</h3>
+          <div class="pack-card-actions">
+            <button class="btn-secondary" style="flex: 1;" onclick="openModal('Red', ['https://i.imgur.com/OsP6VJ2.png', 'https://i.imgur.com/8vWX7jz.png', 'https://i.imgur.com/EDDxBzh.png', 'https://i.imgur.com/p6H6ijt.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Minestar.gg', '1.21 +', 'https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file')">Podgląd</button>
+            <a href="https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- PODKATEGORIA: RAPY.GG -->
@@ -1036,7 +1101,6 @@
         <div class="modal-img-hint">🔍 Kliknij, aby powiększyć</div>
       </div>
 
-      <!-- Kontener na miniatury wielu zdjęć -->
       <div class="modal-gallery-thumbs" id="modalGalleryThumbs"></div>
 
       <div class="modal-details-grid">
@@ -1075,9 +1139,6 @@
   </footer>
 
   <script>
-    /* ======================================================
-        SKRYPT BIAŁEJ SMUGI / MGIEŁKI KURSORA (GLOW TRAIL)
-        ====================================================== */
     const canvas = document.getElementById('trail-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -1153,9 +1214,6 @@
     }
     animateParticles();
 
-    /* ======================================================
-        LOGIKA NAWIGACJI I MODALI
-        ====================================================== */
     function showSection(sectionId) {
       document.querySelectorAll('.section').forEach(sec => {
         sec.classList.remove('active');
