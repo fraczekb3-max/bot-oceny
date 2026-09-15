@@ -199,6 +199,9 @@
       cursor: pointer;
       box-shadow: 0 4px 25px rgba(255, 255, 255, 0.3);
       transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
     }
 
     .btn-primary:hover {
@@ -333,6 +336,101 @@
       font-size: 0.85rem;
       color: #9ca3af;
       line-height: 1.4;
+    }
+
+    /* SEKCJA ZAKUP */
+    .shop-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .shop-category-box {
+      background: linear-gradient(145deg, rgba(13, 17, 26, 0.8), rgba(9, 12, 18, 0.9));
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .shop-category-box:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
+    }
+
+    .shop-category-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+
+    .shop-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .shop-item-row {
+      background: linear-gradient(145deg, rgba(18, 23, 35, 0.8), rgba(10, 14, 22, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .shop-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .shop-item-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .shop-item-desc {
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+
+    .shop-item-price {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, #ffffff, #9ca3af);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+    }
+
+    .shop-ticket-info {
+      background: rgba(88, 101, 242, 0.1);
+      border: 1px solid rgba(88, 101, 242, 0.3);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #c7d2fe;
+      margin-top: auto;
+      font-weight: 600;
     }
 
     /* BANER SERWERA */
@@ -510,7 +608,6 @@
       color: #fff;
     }
 
-    /* Kontener na wiele badge'ów */
     .pack-badges {
       display: flex;
       gap: 6px;
@@ -804,6 +901,7 @@
     <div class="nav-links">
       <a id="nav-home" class="active" onclick="showSection('home-section')">Strona Główna</a>
       <a id="nav-categories" onclick="showSection('categories-section')">Kategorie</a>
+      <a id="nav-zakup" onclick="showSection('zakup-section')">Zakup</a>
       <a href="https://discord.gg/ArpKXfHWZv" target="_blank">Kontakt</a>
     </div>
   </nav>
@@ -886,6 +984,105 @@
     </div>
   </div>
 
+  <!-- SEKCJA: ZAKUP -->
+  <div class="section" id="zakup-section">
+    <div class="section-header">
+      <h2 class="grid-title">Cennik i Zakup Usług</h2>
+    </div>
+
+    <div class="shop-container">
+      
+      <!-- 1. GRAFIKI -->
+      <div class="shop-category-box">
+        <div>
+          <div class="shop-category-title">🎨 Grafiki</div>
+          <div class="shop-items-list">
+            <div class="shop-item-row">
+              <div class="shop-item-info">
+                <span class="shop-item-name">Plakaty</span>
+                <span class="shop-item-desc">Plakaty reklamowe / promocyjne</span>
+              </div>
+              <span class="shop-item-price">10 zł</span>
+            </div>
+            <div class="shop-item-row">
+              <div class="shop-item-info">
+                <span class="shop-item-name">Logo</span>
+                <span class="shop-item-desc">Unikalne logo na projekt</span>
+              </div>
+              <span class="shop-item-price">5 zł</span>
+            </div>
+            <div class="shop-item-row">
+              <div class="shop-item-info">
+                <span class="shop-item-name">Grafiki DC</span>
+                <span class="shop-item-desc">Weryfikacja Discord itp.</span>
+              </div>
+              <span class="shop-item-price">10 zł</span>
+            </div>
+            <div class="shop-item-row" style="background: linear-gradient(145deg, rgba(25, 30, 45, 0.9), rgba(12, 16, 25, 0.95)); border-color: rgba(255,255,255,0.2);">
+              <div class="shop-item-info">
+                <span class="shop-item-name">Pakiet Graficzny</span>
+                <span class="shop-item-desc">Kompletny zestaw grafik</span>
+              </div>
+              <span class="shop-item-price">20 zł</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="shop-ticket-info">Po zakup zapraszamy na kanał # 🎫 · ticket</div>
+          <a href="https://discord.gg/ArpKXfHWZv" target="_blank" class="btn-primary" style="display: block; margin-top: 15px; width: 100%;">Zamów przez Ticket</a>
+        </div>
+      </div>
+
+      <!-- 2. STRONA -->
+      <div class="shop-category-box">
+        <div>
+          <div class="shop-category-title">🌐 Strona</div>
+          <div class="shop-items-list">
+            <div class="shop-item-row" style="padding: 24px 20px;">
+              <div class="shop-item-info">
+                <span class="shop-item-name" style="font-size: 1.1rem;">Strona (Tylko Kod)</span>
+                <span class="shop-item-desc">Nowoczesna, w pełni responsywna strona oparta na czystym kodzie HTML/CSS/JS</span>
+              </div>
+              <span class="shop-item-price">25–100 zł</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="shop-ticket-info">Po zakup zapraszamy na kanał # 🎫 · ticket</div>
+          <a href="https://discord.gg/ArpKXfHWZv" target="_blank" class="btn-primary" style="display: block; margin-top: 15px; width: 100%;">Zamów przez Ticket</a>
+        </div>
+      </div>
+
+      <!-- 3. SKRYPT NA PLUGIN SKRIPT -->
+      <div class="shop-category-box">
+        <div>
+          <div class="shop-category-title">⚙️ Skrypty na Plugin Skript</div>
+          <div class="shop-items-list">
+            <div class="shop-item-row" style="padding: 20px;">
+              <div class="shop-item-info">
+                <span class="shop-item-name">Custom (Własne)</span>
+                <span class="shop-item-desc">Pisane od zera pod Twoje zamówienie</span>
+              </div>
+              <span class="shop-item-price">5–20 zł</span>
+            </div>
+            <div class="shop-item-row" style="padding: 20px;">
+              <div class="shop-item-info">
+                <span class="shop-item-name">Wybrane z Katalogu</span>
+                <span class="shop-item-desc">Gotowe sprawdzone skrypty</span>
+              </div>
+              <span class="shop-item-price">5–10 zł</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="shop-ticket-info">Po zakup zapraszamy na kanał # 🎫 · ticket</div>
+          <a href="https://discord.gg/ArpKXfHWZv" target="_blank" class="btn-primary" style="display: block; margin-top: 15px; width: 100%;">Zamów przez Ticket</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- PODKATEGORIA: ANARCHIA.GG -->
   <div class="section" id="anarchia-section">
     <div class="top-bar-large">
@@ -910,7 +1107,6 @@
     </div>
 
     <div class="pack-grid">
-      <!-- PACZKA: FIOLETOWA SKLEJKA -->
       <div class="pack-card" data-title="fioletowa sklejka loxe_3 lifesteal">
         <img src="https://i.imgur.com/rIiA6eU.png" alt="Fioletowa sklejka" onclick="openModal('Fioletowa sklejka', ['https://i.imgur.com/rIiA6eU.png', 'https://i.imgur.com/NyZTKSy.png', 'https://i.imgur.com/izIKirU.png', 'https://i.imgur.com/okMWnz0.png'], 'luzna sklejka', 'loxe_3', 'lifesteal, pvp', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">
         <div class="pack-card-body">
@@ -925,7 +1121,6 @@
         </div>
       </div>
 
-      <!-- PACZKA: NIEBIESKA -->
       <div class="pack-card" data-title="niebieska xenon lifesteal boxpvp">
         <img src="https://i.imgur.com/ShxgpIN.png" alt="Niebieska" onclick="openModal('Niebieska', ['https://i.imgur.com/ShxgpIN.png', 'https://i.imgur.com/9rqHSFe.png', 'https://i.imgur.com/OnOa8Uf.png', 'https://i.imgur.com/NNt03aR.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Anarchia.GG', '1.21 +', 'https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file')">
         <div class="pack-card-body">
@@ -941,7 +1136,6 @@
         </div>
       </div>
 
-      <!-- PACZKA: RED -->
       <div class="pack-card" data-title="red xenon lifesteal boxpvp">
         <img src="https://i.imgur.com/OsP6VJ2.png" alt="Red" onclick="openModal('Red', ['https://i.imgur.com/OsP6VJ2.png', 'https://i.imgur.com/8vWX7jz.png', 'https://i.imgur.com/EDDxBzh.png', 'https://i.imgur.com/p6H6ijt.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Anarchia.GG', '1.21 +', 'https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file')">
         <div class="pack-card-body">
@@ -983,7 +1177,6 @@
     </div>
 
     <div class="pack-grid">
-      <!-- PACZKA: NIEBIESKA -->
       <div class="pack-card" data-title="niebieska xenon lifesteal boxpvp">
         <img src="https://i.imgur.com/ShxgpIN.png" alt="Niebieska" onclick="openModal('Niebieska', ['https://i.imgur.com/ShxgpIN.png', 'https://i.imgur.com/9rqHSFe.png', 'https://i.imgur.com/OnOa8Uf.png', 'https://i.imgur.com/NNt03aR.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Minestar.gg', '1.21 +', 'https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file')">
         <div class="pack-card-body">
@@ -998,22 +1191,6 @@
           </div>
         </div>
       </div>
-
-      <!-- PACZKA: RED -->
-      <div class="pack-card" data-title="red xenon lifesteal boxpvp">
-        <img src="https://i.imgur.com/OsP6VJ2.png" alt="Red" onclick="openModal('Red', ['https://i.imgur.com/OsP6VJ2.png', 'https://i.imgur.com/8vWX7jz.png', 'https://i.imgur.com/EDDxBzh.png', 'https://i.imgur.com/p6H6ijt.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Minestar.gg', '1.21 +', 'https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file')">
-        <div class="pack-card-body">
-          <div class="pack-badges">
-            <span class="pack-badge">LIFESTEAL</span>
-            <span class="pack-badge">BOXPVP</span>
-          </div>
-          <h3>Red</h3>
-          <div class="pack-card-actions">
-            <button class="btn-secondary" style="flex: 1;" onclick="openModal('Red', ['https://i.imgur.com/OsP6VJ2.png', 'https://i.imgur.com/8vWX7jz.png', 'https://i.imgur.com/EDDxBzh.png', 'https://i.imgur.com/p6H6ijt.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Minestar.gg', '1.21 +', 'https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file')">Podgląd</button>
-            <a href="https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -1022,24 +1199,15 @@
     <div class="top-bar-large">
       <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
     </div>
-
     <div class="server-hero-card">
       <div class="server-hero-info">
         <img src="https://i.imgur.com/0y4sFLI.png" alt="RAPY.GG" class="server-hero-logo">
         <div class="server-hero-text">
           <h2>RAPY.GG <span class="status-badge"><span class="status-dot"></span> Online</span></h2>
-          <div class="server-ip-large">
-            Oficjalny Adres IP: <strong>rapy.gg</strong>
-          </div>
+          <div class="server-ip-large">Oficjalny Adres IP: <strong>rapy.gg</strong></div>
         </div>
       </div>
-      <div class="action-btns-large">
-        <button class="btn-action-lg purple" onclick="copyIP('rapy.gg', this)">📋 Kopiuj IP</button>
-        <a href="https://rapy.gg" target="_blank" class="btn-action-lg">🛒 Sklep</a>
-        <a href="https://discord.com/invite/ZEJzue9TAy" target="_blank" class="btn-action-lg">💬 Discord</a>
-      </div>
     </div>
-
     <div class="pack-grid"></div>
   </div>
 
@@ -1048,24 +1216,15 @@
     <div class="top-bar-large">
       <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
     </div>
-
     <div class="server-hero-card">
       <div class="server-hero-info">
         <img src="https://i.imgur.com/V2p0rbT.png" alt="Szefy.pl" class="server-hero-logo">
         <div class="server-hero-text">
           <h2>Szefy.pl <span class="status-badge"><span class="status-dot"></span> Online</span></h2>
-          <div class="server-ip-large">
-            Oficjalny Adres IP: <strong>szefy.pl</strong>
-          </div>
+          <div class="server-ip-large">Oficjalny Adres IP: <strong>szefy.pl</strong></div>
         </div>
       </div>
-      <div class="action-btns-large">
-        <button class="btn-action-lg purple" onclick="copyIP('szefy.pl', this)">📋 Kopiuj IP</button>
-        <a href="https://szefy.pl" target="_blank" class="btn-action-lg">🛒 Sklep</a>
-        <a href="https://discord.com/invite/wR7QAyyB5M" target="_blank" class="btn-action-lg">💬 Discord</a>
-      </div>
     </div>
-
     <div class="pack-grid"></div>
   </div>
 
@@ -1074,18 +1233,14 @@
     <div class="top-bar-large">
       <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
     </div>
-
     <div class="server-hero-card">
       <div class="server-hero-info">
         <div class="server-hero-text">
           <h2>Pozostałe Paczki</h2>
-          <div class="server-ip-large">
-            Uniwersalne paczki tekstur dla każdego trybu
-          </div>
+          <div class="server-ip-large">Uniwersalne paczki tekstur dla każdego trybu</div>
         </div>
       </div>
     </div>
-
     <div class="pack-grid"></div>
   </div>
 
@@ -1223,13 +1378,18 @@
       document.querySelectorAll('.nav-links a').forEach(link => {
         link.classList.remove('active');
       });
+      
       if (sectionId === 'home-section') {
         const homeLink = document.getElementById('nav-home');
         if (homeLink) homeLink.classList.add('active');
+      } else if (sectionId === 'zakup-section') {
+        const zakupLink = document.getElementById('nav-zakup');
+        if (zakupLink) zakupLink.classList.add('active');
       } else if (sectionId === 'categories-section' || sectionId.includes('-section')) {
         const catLink = document.getElementById('nav-categories');
         if (catLink) catLink.classList.add('active');
       }
+      
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
