@@ -12,13 +12,13 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
       user-select: none;
     }
 
     body {
-      background-color: #06090e;
-      color: #f3f4f6;
+      background-color: #030508;
+      color: #e2e8f0;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -26,7 +26,7 @@
       position: relative;
     }
 
-    /* TŁO CANVAS POD BIAŁĄ MGŁĘ */
+    /* TŁO CANVAS POD NOWOCZESNĄ MGŁĘ */
     #trail-canvas {
       position: fixed;
       top: 0;
@@ -42,7 +42,7 @@
       z-index: 1;
     }
 
-    /* Nawigacja z głębszym glassmorphismem */
+    /* Nawigacja */
     nav {
       max-width: 1200px;
       width: 100%;
@@ -50,14 +50,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 25px 25px;
+      padding: 30px 25px;
     }
 
     .logo {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: 800;
       letter-spacing: -0.5px;
       color: #fff;
@@ -65,40 +65,40 @@
     }
 
     .logo-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
       object-fit: cover;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+      border: 1px solid rgba(56, 189, 248, 0.4);
     }
 
     .nav-links {
       display: flex;
-      gap: 10px;
-      background: rgba(13, 17, 26, 0.7);
+      gap: 8px;
+      background: rgba(15, 23, 42, 0.8);
       padding: 6px 14px;
       border-radius: 30px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
 
     .nav-links a {
-      color: #9ca3af;
+      color: #94a3b8;
       text-decoration: none;
       font-size: 0.88rem;
-      font-weight: 500;
+      font-weight: 600;
       transition: color 0.2s, background 0.2s, transform 0.2s;
       cursor: pointer;
-      padding: 6px 14px;
-      border-radius: 14px;
+      padding: 8px 16px;
+      border-radius: 16px;
     }
 
     .nav-links a:hover, .nav-links a.active {
       color: #fff;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(14, 165, 233, 0.1));
+      border: 1px solid rgba(56, 189, 248, 0.3);
     }
 
     /* Sekcje strony */
@@ -109,7 +109,7 @@
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 30px 25px 60px 25px;
+      padding: 20px 25px 60px 25px;
     }
 
     .section.active {
@@ -120,18 +120,18 @@
     /* HERO SECTION */
     .hero {
       text-align: center;
-      padding: 70px 20px 50px 20px;
+      padding: 80px 20px 60px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
     .hero-title {
-      font-size: 3.8rem;
+      font-size: 4rem;
       font-weight: 800;
       letter-spacing: -1.5px;
       margin-bottom: 20px;
-      line-height: 1.2;
+      line-height: 1.15;
       color: #ffffff;
       display: flex;
       gap: 14px;
@@ -141,16 +141,16 @@
     }
 
     .hero-title .highlight {
-      background: linear-gradient(135deg, #ffffff, #d1d5db, #9ca3af);
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-style: italic;
-      font-weight: 700;
-      filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.4));
+      font-weight: 800;
+      filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.5));
     }
 
     .hero p {
-      color: #9ca3af;
+      color: #94a3b8;
       max-width: 650px;
       font-size: 1.1rem;
       line-height: 1.6;
@@ -158,11 +158,11 @@
     }
 
     .hero-discord-text {
-      color: #9ca3af;
+      color: #94a3b8;
       max-width: 650px;
       font-size: 1.05rem;
       line-height: 1.6;
-      margin-bottom: 30px;
+      margin-bottom: 35px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -179,40 +179,37 @@
 
     .hero-discord-text img.discord-inline-icon:hover {
       transform: scale(1.08);
-      filter: drop-shadow(0 0 10px rgba(88, 101, 242, 0.6));
+      filter: drop-shadow(0 0 12px rgba(88, 101, 242, 0.8));
     }
 
     .hero-buttons {
       display: flex;
       justify-content: center;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #ffffff, #d1d5db);
-      color: #06090e !important;
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      color: #030508 !important;
       border: none;
-      padding: 14px 36px;
-      border-radius: 14px;
+      padding: 15px 38px;
+      border-radius: 16px;
       font-weight: 700;
       font-size: 1rem;
       cursor: pointer;
-      box-shadow: 0 4px 25px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 25px rgba(56, 189, 248, 0.4);
       transition: transform 0.2s, box-shadow 0.2s;
-      text-decoration: none;
-      display: inline-block;
-      text-align: center;
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 35px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 6px 35px rgba(56, 189, 248, 0.6);
     }
 
     .btn-secondary {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #e5e7eb;
+      color: #e2e8f0;
       padding: 10px 20px;
       border-radius: 12px;
       font-weight: 600;
@@ -223,50 +220,8 @@
 
     .btn-secondary:hover {
       background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.4);
+      border-color: rgba(56, 189, 248, 0.4);
       transform: translateY(-1px);
-    }
-
-    /* Pasek Serwerów */
-    .servers-bar {
-      margin-top: 70px;
-      width: 100%;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 35px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .server-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(13, 17, 26, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 10px 18px;
-      border-radius: 14px;
-      color: #9ca3af;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: color 0.2s, transform 0.2s, border-color 0.2s, background 0.2s;
-      backdrop-filter: blur(6px);
-    }
-
-    .server-item:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .server-item img {
-      width: 26px;
-      height: 26px;
-      border-radius: 6px;
-      object-fit: cover;
     }
 
     /* KATEGORIE */
@@ -274,14 +229,16 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 45px;
       gap: 20px;
     }
 
     .grid-title {
-      font-size: 2rem;
+      font-size: 2.5rem;
       font-weight: 800;
-      color: #fff;
+      background: linear-gradient(135deg, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       text-align: center;
       letter-spacing: -0.5px;
     }
@@ -293,146 +250,6 @@
       gap: 25px;
     }
 
-    .folder-card {
-      background: linear-gradient(145deg, rgba(13, 17, 26, 0.7), rgba(9, 12, 18, 0.8));
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 20px;
-      padding: 35px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s, background 0.25s, box-shadow 0.25s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-
-    .folder-card:hover {
-      transform: translateY(-6px);
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(13, 17, 26, 0.9));
-      border-color: rgba(255, 255, 255, 0.4);
-      box-shadow: 0 15px 40px rgba(255, 255, 255, 0.15);
-    }
-
-    .folder-card img {
-      width: 80px;
-      height: 80px;
-      border-radius: 18px;
-      object-fit: cover;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .folder-card h2 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: #fff;
-    }
-
-    .folder-card p {
-      font-size: 0.85rem;
-      color: #9ca3af;
-      line-height: 1.4;
-    }
-
-    /* SEKCJA ZAKUP */
-    .shop-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-    }
-
-    .shop-category-box {
-      background: linear-gradient(145deg, rgba(13, 17, 26, 0.8), rgba(9, 12, 18, 0.9));
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
-    }
-
-    .shop-category-box:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
-    }
-
-    .shop-category-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 12px;
-    }
-
-    .shop-items-list {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .shop-item-row {
-      background: linear-gradient(145deg, rgba(18, 23, 35, 0.8), rgba(10, 14, 22, 0.9));
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 14px;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .shop-item-info {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .shop-item-name {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .shop-item-desc {
-      font-size: 0.78rem;
-      color: #9ca3af;
-    }
-
-    .shop-item-price {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #fff;
-      background: linear-gradient(135deg, #ffffff, #9ca3af);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      white-space: nowrap;
-    }
-
-    .shop-ticket-info {
-      background: rgba(88, 101, 242, 0.1);
-      border: 1px solid rgba(88, 101, 242, 0.3);
-      border-radius: 12px;
-      padding: 14px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: #c7d2fe;
-      margin-top: auto;
-      font-weight: 600;
-    }
-
     /* BANER SERWERA */
     .top-bar-large {
       display: flex;
@@ -441,9 +258,9 @@
     }
 
     .server-hero-card {
-      background: linear-gradient(135deg, rgba(13, 17, 26, 0.8), rgba(255, 255, 255, 0.06));
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(56, 189, 248, 0.06));
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(56, 189, 248, 0.2);
       border-radius: 24px;
       padding: 35px;
       margin-bottom: 40px;
@@ -452,7 +269,7 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 25px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
     }
 
     .server-hero-info {
@@ -480,6 +297,7 @@
       gap: 12px;
     }
 
+    /* Status online */
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -510,7 +328,7 @@
 
     .server-ip-large {
       font-size: 1.05rem;
-      color: #9ca3af;
+      color: #94a3b8;
     }
 
     .server-ip-large strong {
@@ -540,19 +358,19 @@
 
     .btn-action-lg:hover {
       background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(56, 189, 248, 0.3);
       transform: translateY(-2px);
     }
 
     .btn-action-lg.purple {
-      background: linear-gradient(135deg, #ffffff, #d1d5db);
-      color: #06090e;
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      color: #030508;
       border: none;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.35);
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.35);
     }
 
     .btn-action-lg.purple:hover {
-      background: linear-gradient(135deg, #d1d5db, #9ca3af);
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
     }
 
     /* PACZKI GRID */
@@ -563,21 +381,21 @@
     }
 
     .pack-card {
-      background: linear-gradient(145deg, rgba(13, 17, 26, 0.7), rgba(9, 12, 18, 0.8));
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.75), rgba(9, 14, 26, 0.85));
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 20px;
       overflow: hidden;
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s, box-shadow 0.25s;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
     .pack-card:hover {
       transform: translateY(-5px);
-      border-color: rgba(255, 255, 255, 0.4);
-      box-shadow: 0 15px 35px rgba(255, 255, 255, 0.2);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 15px 35px rgba(56, 189, 248, 0.2);
     }
 
     .pack-card img {
@@ -608,22 +426,16 @@
       color: #fff;
     }
 
-    .pack-badges {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-      align-self: flex-start;
-    }
-
     .pack-badge {
+      align-self: flex-start;
       font-size: 0.72rem;
       padding: 4px 10px;
-      background: rgba(255, 255, 255, 0.15);
-      color: #ffffff;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
       border-radius: 8px;
+      margin-bottom: 14px;
       font-weight: 600;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(56, 189, 248, 0.3);
     }
 
     .pack-card-actions {
@@ -654,14 +466,14 @@
     }
 
     .modal {
-      background: linear-gradient(145deg, #0d111a, #090c12);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: linear-gradient(145deg, #0f172a, #090e1a);
+      border: 1px solid rgba(56, 189, 248, 0.3);
       border-radius: 24px;
       width: 92%;
       max-width: 650px;
       padding: 35px;
       position: relative;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 255, 255, 0.15);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.15);
       transform: translateY(40px);
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -676,7 +488,7 @@
       right: 20px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #9ca3af;
+      color: #94a3b8;
       width: 38px;
       height: 38px;
       border-radius: 50%;
@@ -760,7 +572,7 @@
 
     .detail-label {
       font-size: 0.75rem;
-      color: #71717a;
+      color: #64748b;
       text-transform: uppercase;
       font-weight: 700;
       letter-spacing: 0.5px;
@@ -768,7 +580,7 @@
 
     .detail-value {
       font-size: 0.95rem;
-      color: #e5e7eb;
+      color: #e2e8f0;
       font-weight: 600;
     }
 
@@ -781,20 +593,21 @@
     .modal-tag {
       font-size: 0.75rem;
       padding: 3px 8px;
-      background: rgba(255, 255, 255, 0.2);
-      color: #ffffff;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
       border-radius: 6px;
       font-weight: 600;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(56, 189, 248, 0.3);
     }
 
     .modal p {
       font-size: 0.92rem;
-      color: #9ca3af;
+      color: #94a3b8;
       line-height: 1.6;
       margin-bottom: 25px;
     }
 
+    /* GALERIA MINIATUR W MODALU */
     .modal-gallery-thumbs {
       display: flex;
       gap: 10px;
@@ -816,10 +629,11 @@
 
     .modal-thumb:hover, .modal-thumb.active {
       opacity: 1;
-      border-color: #ffffff;
+      border-color: #38bdf8;
       transform: scale(1.05);
     }
 
+    /* PEŁNOEKRANOWA GALERIA ZDJĘĆ */
     .lightbox-overlay {
       position: fixed;
       inset: 0;
@@ -845,8 +659,8 @@
       max-height: 85vh;
       object-fit: contain;
       border-radius: 14px;
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.2);
+      border: 1px solid rgba(56, 189, 248, 0.3);
       transform: scale(0.95);
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -884,14 +698,16 @@
       padding: 30px;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       font-size: 0.8rem;
-      color: #52525b;
+      color: #64748b;
     }
   </style>
 </head>
 <body>
 
+  <!-- Canvas dla nowoczesnej mgiełki -->
   <canvas id="trail-canvas"></canvas>
 
+  <!-- Nawigacja -->
   <nav>
     <div class="logo" onclick="showSection('home-section')">
       <img src="https://i.imgur.com/v41E0iC.png" alt="Xenon Logo" class="logo-icon">
@@ -900,8 +716,7 @@
 
     <div class="nav-links">
       <a id="nav-home" class="active" onclick="showSection('home-section')">Strona Główna</a>
-      <a id="nav-categories" onclick="showSection('categories-section')">Kategorie</a>
-      <a id="nav-zakup" onclick="showSection('zakup-section')">Zakup</a>
+      <a id="nav-categories" onclick="showSection('categories-section')">TXT</a>
       <a href="https://discord.gg/ArpKXfHWZv" target="_blank">Kontakt</a>
     </div>
   </nav>
@@ -928,158 +743,16 @@
         <button class="btn-primary" onclick="showSection('categories-section')">Przeglądaj Paczki</button>
       </div>
     </div>
-
-    <div class="servers-bar">
-      <div class="server-item" onclick="showSection('anarchia-section')">
-        <img src="https://i.imgur.com/5zdjpWE.png" alt="Anarchia">
-        <span>Anarchia GG</span>
-      </div>
-      <div class="server-item" onclick="showSection('minestar-section')">
-        <img src="https://i.imgur.com/f2W0IET.png" alt="Minestar">
-        <span>Minestar GG</span>
-      </div>
-      <div class="server-item" onclick="showSection('rapy-section')">
-        <img src="https://i.imgur.com/0y4sFLI.png" alt="Rapy">
-        <span>RAPY.GG</span>
-      </div>
-    </div>
   </div>
 
-  <!-- KATEGORIE -->
+  <!-- KATEGORIE (Pusta sekcja po usunięciu kafelków) -->
   <div class="section" id="categories-section">
     <div class="section-header">
-      <h2 class="grid-title">Wybierz Kategorię</h2>
+      <h2 class="grid-title">TXT</h2>
     </div>
 
     <div class="folder-grid">
-      <div class="folder-card" onclick="showSection('anarchia-section')">
-        <img src="https://i.imgur.com/5zdjpWE.png" alt="Anarchia.GG">
-        <h2>Anarchia.GG</h2>
-        <p>Resource packi zoptymalizowane pod tryb Anarchia</p>
-      </div>
-
-      <div class="folder-card" onclick="showSection('minestar-section')">
-        <img src="https://i.imgur.com/f2W0IET.png" alt="Minestar.gg">
-        <h2>Minestar.gg</h2>
-        <p>Paczki dopasowane pod rozgrywkę na Minestar</p>
-      </div>
-
-      <div class="folder-card" onclick="showSection('rapy-section')">
-        <img src="https://i.imgur.com/0y4sFLI.png" alt="RAPY.GG">
-        <h2>RAPY.GG</h2>
-        <p>Paczki dedykowane na serwer RAPY.GG</p>
-      </div>
-
-      <div class="folder-card" onclick="showSection('szefy-section')">
-        <img src="https://i.imgur.com/V2p0rbT.png" alt="Szefy.pl">
-        <h2>Szefy.pl</h2>
-        <p>Paczki dedykowane na serwer Szefy.pl</p>
-      </div>
-
-      <div class="folder-card" onclick="showSection('inne-section')">
-        <div style="font-size: 3rem; margin-bottom: 18px;">📂</div>
-        <h2>Inne</h2>
-        <p>Ogólne paczki PvP, FPS Boost i klasyczne</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- SEKCJA: ZAKUP -->
-  <div class="section" id="zakup-section">
-    <div class="section-header">
-      <h2 class="grid-title">Cennik i Zakup Usług</h2>
-    </div>
-
-    <div class="shop-container">
-      
-      <!-- 1. GRAFIKI -->
-      <div class="shop-category-box">
-        <div>
-          <div class="shop-category-title">🎨 Grafiki</div>
-          <div class="shop-items-list">
-            <div class="shop-item-row">
-              <div class="shop-item-info">
-                <span class="shop-item-name">Plakaty</span>
-                <span class="shop-item-desc">Plakaty reklamowe / promocyjne</span>
-              </div>
-              <span class="shop-item-price">10 zł</span>
-            </div>
-            <div class="shop-item-row">
-              <div class="shop-item-info">
-                <span class="shop-item-name">Logo</span>
-                <span class="shop-item-desc">Unikalne logo na projekt</span>
-              </div>
-              <span class="shop-item-price">5 zł</span>
-            </div>
-            <div class="shop-item-row">
-              <div class="shop-item-info">
-                <span class="shop-item-name">Grafiki DC</span>
-                <span class="shop-item-desc">Weryfikacja Discord itp.</span>
-              </div>
-              <span class="shop-item-price">10 zł</span>
-            </div>
-            <div class="shop-item-row" style="background: linear-gradient(145deg, rgba(25, 30, 45, 0.9), rgba(12, 16, 25, 0.95)); border-color: rgba(255,255,255,0.2);">
-              <div class="shop-item-info">
-                <span class="shop-item-name">Pakiet Graficzny</span>
-                <span class="shop-item-desc">Kompletny zestaw grafik</span>
-              </div>
-              <span class="shop-item-price">20 zł</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="shop-ticket-info">Po zakup zapraszamy na kanał # 🎫 · ticket</div>
-          <a href="https://discord.gg/ArpKXfHWZv" target="_blank" class="btn-primary" style="display: block; margin-top: 15px; width: 100%;">Zamów przez Ticket</a>
-        </div>
-      </div>
-
-      <!-- 2. STRONA -->
-      <div class="shop-category-box">
-        <div>
-          <div class="shop-category-title">🌐 Strona</div>
-          <div class="shop-items-list">
-            <div class="shop-item-row" style="padding: 24px 20px;">
-              <div class="shop-item-info">
-                <span class="shop-item-name" style="font-size: 1.1rem;">Strona (Tylko Kod)</span>
-                <span class="shop-item-desc">Nowoczesna, w pełni responsywna strona oparta na czystym kodzie HTML/CSS/JS</span>
-              </div>
-              <span class="shop-item-price">25–100 zł</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="shop-ticket-info">Po zakup zapraszamy na kanał # 🎫 · ticket</div>
-          <a href="https://discord.gg/ArpKXfHWZv" target="_blank" class="btn-primary" style="display: block; margin-top: 15px; width: 100%;">Zamów przez Ticket</a>
-        </div>
-      </div>
-
-      <!-- 3. SKRYPT NA PLUGIN SKRIPT -->
-      <div class="shop-category-box">
-        <div>
-          <div class="shop-category-title">⚙️ Skrypty na Plugin Skript</div>
-          <div class="shop-items-list">
-            <div class="shop-item-row" style="padding: 20px;">
-              <div class="shop-item-info">
-                <span class="shop-item-name">Custom (Własne)</span>
-                <span class="shop-item-desc">Pisane od zera pod Twoje zamówienie</span>
-              </div>
-              <span class="shop-item-price">5–20 zł</span>
-            </div>
-            <div class="shop-item-row" style="padding: 20px;">
-              <div class="shop-item-info">
-                <span class="shop-item-name">Wybrane z Katalogu</span>
-                <span class="shop-item-desc">Gotowe sprawdzone skrypty</span>
-              </div>
-              <span class="shop-item-price">5–10 zł</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="shop-ticket-info">Po zakup zapraszamy na kanał # 🎫 · ticket</div>
-          <a href="https://discord.gg/ArpKXfHWZv" target="_blank" class="btn-primary" style="display: block; margin-top: 15px; width: 100%;">Zamów przez Ticket</a>
-        </div>
-      </div>
-
+      <!-- Wszystkie kafelki serwerów zostały usunięte -->
     </div>
   </div>
 
@@ -1107,46 +780,15 @@
     </div>
 
     <div class="pack-grid">
+      <!-- PACZKA: FIOLETOWA SKLEJKA -->
       <div class="pack-card" data-title="fioletowa sklejka loxe_3 lifesteal">
         <img src="https://i.imgur.com/rIiA6eU.png" alt="Fioletowa sklejka" onclick="openModal('Fioletowa sklejka', ['https://i.imgur.com/rIiA6eU.png', 'https://i.imgur.com/NyZTKSy.png', 'https://i.imgur.com/izIKirU.png', 'https://i.imgur.com/okMWnz0.png'], 'luzna sklejka', 'loxe_3', 'lifesteal, pvp', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">
         <div class="pack-card-body">
-          <div class="pack-badges">
-            <span class="pack-badge">LIFESTEAL</span>
-          </div>
+          <span class="pack-badge">lifesteal</span>
           <h3>Fioletowa sklejka</h3>
           <div class="pack-card-actions">
             <button class="btn-secondary" style="flex: 1;" onclick="openModal('Fioletowa sklejka', ['https://i.imgur.com/rIiA6eU.png', 'https://i.imgur.com/NyZTKSy.png', 'https://i.imgur.com/izIKirU.png', 'https://i.imgur.com/okMWnz0.png'], 'luzna sklejka', 'loxe_3', 'lifesteal, pvp', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">Podgląd</button>
             <a href="https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pack-card" data-title="niebieska xenon lifesteal boxpvp">
-        <img src="https://i.imgur.com/ShxgpIN.png" alt="Niebieska" onclick="openModal('Niebieska', ['https://i.imgur.com/ShxgpIN.png', 'https://i.imgur.com/9rqHSFe.png', 'https://i.imgur.com/OnOa8Uf.png', 'https://i.imgur.com/NNt03aR.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Anarchia.GG', '1.21 +', 'https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file')">
-        <div class="pack-card-body">
-          <div class="pack-badges">
-            <span class="pack-badge">LIFESTEAL</span>
-            <span class="pack-badge">BOXPVP</span>
-          </div>
-          <h3>Niebieska</h3>
-          <div class="pack-card-actions">
-            <button class="btn-secondary" style="flex: 1;" onclick="openModal('Niebieska', ['https://i.imgur.com/ShxgpIN.png', 'https://i.imgur.com/9rqHSFe.png', 'https://i.imgur.com/OnOa8Uf.png', 'https://i.imgur.com/NNt03aR.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Anarchia.GG', '1.21 +', 'https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file')">Podgląd</button>
-            <a href="https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pack-card" data-title="red xenon lifesteal boxpvp">
-        <img src="https://i.imgur.com/OsP6VJ2.png" alt="Red" onclick="openModal('Red', ['https://i.imgur.com/OsP6VJ2.png', 'https://i.imgur.com/8vWX7jz.png', 'https://i.imgur.com/EDDxBzh.png', 'https://i.imgur.com/p6H6ijt.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Anarchia.GG', '1.21 +', 'https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file')">
-        <div class="pack-card-body">
-          <div class="pack-badges">
-            <span class="pack-badge">LIFESTEAL</span>
-            <span class="pack-badge">BOXPVP</span>
-          </div>
-          <h3>Red</h3>
-          <div class="pack-card-actions">
-            <button class="btn-secondary" style="flex: 1;" onclick="openModal('Red', ['https://i.imgur.com/OsP6VJ2.png', 'https://i.imgur.com/8vWX7jz.png', 'https://i.imgur.com/EDDxBzh.png', 'https://i.imgur.com/p6H6ijt.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Anarchia.GG', '1.21 +', 'https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file')">Podgląd</button>
-            <a href="https://www.mediafire.com/file/p2amsd88ck6p7rz/Xenon_red_22.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
           </div>
         </div>
       </div>
@@ -1176,22 +818,7 @@
       </div>
     </div>
 
-    <div class="pack-grid">
-      <div class="pack-card" data-title="niebieska xenon lifesteal boxpvp">
-        <img src="https://i.imgur.com/ShxgpIN.png" alt="Niebieska" onclick="openModal('Niebieska', ['https://i.imgur.com/ShxgpIN.png', 'https://i.imgur.com/9rqHSFe.png', 'https://i.imgur.com/OnOa8Uf.png', 'https://i.imgur.com/NNt03aR.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Minestar.gg', '1.21 +', 'https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file')">
-        <div class="pack-card-body">
-          <div class="pack-badges">
-            <span class="pack-badge">LIFESTEAL</span>
-            <span class="pack-badge">BOXPVP</span>
-          </div>
-          <h3>Niebieska</h3>
-          <div class="pack-card-actions">
-            <button class="btn-secondary" style="flex: 1;" onclick="openModal('Niebieska', ['https://i.imgur.com/ShxgpIN.png', 'https://i.imgur.com/9rqHSFe.png', 'https://i.imgur.com/OnOa8Uf.png', 'https://i.imgur.com/NNt03aR.png'], 'LUZNY TXT', 'Xenon', 'LIFESTEAL, BOXPVP', 'Minestar.gg', '1.21 +', 'https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file')">Podgląd</button>
-            <a href="https://www.mediafire.com/file/ht73fzxzxj4kxks/Niebieski_.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="pack-grid"></div>
   </div>
 
   <!-- PODKATEGORIA: RAPY.GG -->
@@ -1199,15 +826,24 @@
     <div class="top-bar-large">
       <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
     </div>
+
     <div class="server-hero-card">
       <div class="server-hero-info">
         <img src="https://i.imgur.com/0y4sFLI.png" alt="RAPY.GG" class="server-hero-logo">
         <div class="server-hero-text">
           <h2>RAPY.GG <span class="status-badge"><span class="status-dot"></span> Online</span></h2>
-          <div class="server-ip-large">Oficjalny Adres IP: <strong>rapy.gg</strong></div>
+          <div class="server-ip-large">
+            Oficjalny Adres IP: <strong>rapy.gg</strong>
+          </div>
         </div>
       </div>
+      <div class="action-btns-large">
+        <button class="btn-action-lg purple" onclick="copyIP('rapy.gg', this)">📋 Kopiuj IP</button>
+        <a href="https://rapy.gg" target="_blank" class="btn-action-lg">🛒 Sklep</a>
+        <a href="https://discord.com/invite/ZEJzue9TAy" target="_blank" class="btn-action-lg">💬 Discord</a>
+      </div>
     </div>
+
     <div class="pack-grid"></div>
   </div>
 
@@ -1216,15 +852,24 @@
     <div class="top-bar-large">
       <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
     </div>
+
     <div class="server-hero-card">
       <div class="server-hero-info">
         <img src="https://i.imgur.com/V2p0rbT.png" alt="Szefy.pl" class="server-hero-logo">
         <div class="server-hero-text">
           <h2>Szefy.pl <span class="status-badge"><span class="status-dot"></span> Online</span></h2>
-          <div class="server-ip-large">Oficjalny Adres IP: <strong>szefy.pl</strong></div>
+          <div class="server-ip-large">
+            Oficjalny Adres IP: <strong>szefy.pl</strong>
+          </div>
         </div>
       </div>
+      <div class="action-btns-large">
+        <button class="btn-action-lg purple" onclick="copyIP('szefy.pl', this)">📋 Kopiuj IP</button>
+        <a href="https://szefy.pl" target="_blank" class="btn-action-lg">🛒 Sklep</a>
+        <a href="https://discord.com/invite/wR7QAyyB5M" target="_blank" class="btn-action-lg">💬 Discord</a>
+      </div>
     </div>
+
     <div class="pack-grid"></div>
   </div>
 
@@ -1233,14 +878,18 @@
     <div class="top-bar-large">
       <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
     </div>
+
     <div class="server-hero-card">
       <div class="server-hero-info">
         <div class="server-hero-text">
           <h2>Pozostałe Paczki</h2>
-          <div class="server-ip-large">Uniwersalne paczki tekstur dla każdego trybu</div>
+          <div class="server-ip-large">
+            Uniwersalne paczki tekstur dla każdego trybu
+          </div>
         </div>
       </div>
     </div>
+
     <div class="pack-grid"></div>
   </div>
 
@@ -1256,6 +905,7 @@
         <div class="modal-img-hint">🔍 Kliknij, aby powiększyć</div>
       </div>
 
+      <!-- Galeria miniatur -->
       <div class="modal-gallery-thumbs" id="modalGalleryThumbs"></div>
 
       <div class="modal-details-grid">
@@ -1294,6 +944,9 @@
   </footer>
 
   <script>
+    /* ======================================================
+        SKRYPT BIAŁEJ SMUGI / MGIEŁKI KURSORA (GLOW TRAIL)
+        ====================================================== */
     const canvas = document.getElementById('trail-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -1313,7 +966,7 @@
         this.y = y;
         this.size = Math.random() * 45 + 35;
         this.alpha = 0.35;
-        this.color = { r: 255, g: 255, b: 255 };
+        this.color = { r: 56, g: 189, b: 248 };
         this.vx = (Math.random() - 0.5) * 0.6;
         this.vy = (Math.random() - 0.5) * 0.6;
       }
@@ -1333,7 +986,7 @@
           this.x, this.y, this.size
         );
         gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`);
-        gradient.addColorStop(0.6, `rgba(200, 200, 200, ${this.alpha * 0.4})`);
+        gradient.addColorStop(0.6, `rgba(129, 140, 248, ${this.alpha * 0.4})`);
         gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
         ctx.fillStyle = gradient;
@@ -1369,6 +1022,9 @@
     }
     animateParticles();
 
+    /* ======================================================
+        LOGIKA NAWIGACJI I MODALI
+        ====================================================== */
     function showSection(sectionId) {
       document.querySelectorAll('.section').forEach(sec => {
         sec.classList.remove('active');
@@ -1378,18 +1034,13 @@
       document.querySelectorAll('.nav-links a').forEach(link => {
         link.classList.remove('active');
       });
-      
       if (sectionId === 'home-section') {
         const homeLink = document.getElementById('nav-home');
         if (homeLink) homeLink.classList.add('active');
-      } else if (sectionId === 'zakup-section') {
-        const zakupLink = document.getElementById('nav-zakup');
-        if (zakupLink) zakupLink.classList.add('active');
       } else if (sectionId === 'categories-section' || sectionId.includes('-section')) {
         const catLink = document.getElementById('nav-categories');
         if (catLink) catLink.classList.add('active');
       }
-      
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
