@@ -1,1121 +1,381 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class="scroll-smooth dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xenon TxT - Minecraft Texture Packs</title>
-  <link rel="icon" type="image/png" href="https://i.imgur.com/v41E0iC.png">
-  
-  <style>
-    /* Reset i podstawowe style */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-      user-select: none;
-    }
-
-    body {
-      background-color: #030508;
-      color: #e2e8f0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* TŁO CANVAS POD NOWOCZESNĄ MGŁĘ */
-    #trail-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    nav, .section, footer, .modal-overlay, .lightbox-overlay {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Nawigacja */
-    nav {
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 30px 25px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .logo-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      object-fit: cover;
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 8px;
-      background: rgba(15, 23, 42, 0.8);
-      padding: 6px 14px;
-      border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-    }
-
-    .nav-links a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 600;
-      transition: color 0.2s, background 0.2s, transform 0.2s;
-      cursor: pointer;
-      padding: 8px 16px;
-      border-radius: 16px;
-    }
-
-    .nav-links a:hover, .nav-links a.active {
-      color: #fff;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(14, 165, 233, 0.1));
-      border: 1px solid rgba(56, 189, 248, 0.3);
-    }
-
-    /* Sekcje strony */
-    .section {
-      display: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px 25px 60px 25px;
-    }
-
-    .section.active {
-      display: block;
-      opacity: 1;
-    }
-
-    /* HERO SECTION */
-    .hero {
-      text-align: center;
-      padding: 80px 20px 60px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .hero-title {
-      font-size: 4rem;
-      font-weight: 800;
-      letter-spacing: -1.5px;
-      margin-bottom: 20px;
-      line-height: 1.15;
-      color: #ffffff;
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .hero-title .highlight {
-      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-style: italic;
-      font-weight: 800;
-      filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.5));
-    }
-
-    .hero p {
-      color: #94a3b8;
-      max-width: 650px;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
-
-    .hero-discord-text {
-      color: #94a3b8;
-      max-width: 650px;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      margin-bottom: 35px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .hero-discord-text img.discord-inline-icon {
-      height: 28px;
-      vertical-align: middle;
-      cursor: pointer;
-      transition: transform 0.2s, filter 0.2s;
-    }
-
-    .hero-discord-text img.discord-inline-icon:hover {
-      transform: scale(1.08);
-      filter: drop-shadow(0 0 12px rgba(88, 101, 242, 0.8));
-    }
-
-    .hero-buttons {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 30px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      color: #030508 !important;
-      border: none;
-      padding: 15px 38px;
-      border-radius: 16px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 4px 25px rgba(56, 189, 248, 0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 35px rgba(56, 189, 248, 0.6);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #e2e8f0;
-      padding: 10px 20px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, transform 0.2s;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(56, 189, 248, 0.4);
-      transform: translateY(-1px);
-    }
-
-    /* KATEGORIE */
-    .section-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 45px;
-      gap: 20px;
-    }
-
-    .grid-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #fff, #94a3b8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-align: center;
-      letter-spacing: -0.5px;
-    }
-
-    .folder-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
-      justify-content: center;
-      gap: 25px;
-    }
-
-    /* BANER SERWERA */
-    .top-bar-large {
-      display: flex;
-      align-items: center;
-      margin-bottom: 25px;
-    }
-
-    .server-hero-card {
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(56, 189, 248, 0.06));
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      border-radius: 24px;
-      padding: 35px;
-      margin-bottom: 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 25px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-    }
-
-    .server-hero-info {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-    }
-
-    .server-hero-logo {
-      width: 72px;
-      height: 72px;
-      border-radius: 18px;
-      object-fit: cover;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-    }
-
-    .server-hero-text h2 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      margin-bottom: 6px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    /* Status online */
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      background: rgba(34, 197, 94, 0.15);
-      color: #4ade80;
-      padding: 4px 10px;
-      border-radius: 20px;
-      border: 1px solid rgba(34, 197, 94, 0.3);
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      background-color: #4ade80;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #4ade80;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    .server-ip-large {
-      font-size: 1.05rem;
-      color: #94a3b8;
-    }
-
-    .server-ip-large strong {
-      color: #ffffff;
-      font-size: 1.2rem;
-      margin-left: 6px;
-      letter-spacing: 0.5px;
-    }
-
-    .action-btns-large {
-      display: flex;
-      gap: 12px;
-    }
-
-    .btn-action-lg {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #fff;
-      padding: 12px 22px;
-      border-radius: 14px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.2s, border-color 0.2s;
-    }
-
-    .btn-action-lg:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(56, 189, 248, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .btn-action-lg.purple {
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      color: #030508;
-      border: none;
-      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.35);
-    }
-
-    .btn-action-lg.purple:hover {
-      background: linear-gradient(135deg, #0ea5e9, #0284c7);
-    }
-
-    /* PACZKI GRID */
-    .pack-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 340px));
-      gap: 25px;
-    }
-
-    .pack-card {
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.75), rgba(9, 14, 26, 0.85));
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s, box-shadow 0.25s;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    .pack-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(56, 189, 248, 0.4);
-      box-shadow: 0 15px 35px rgba(56, 189, 248, 0.2);
-    }
-
-    .pack-card img {
-      width: 100%;
-      height: 130px;
-      object-fit: cover;
-      cursor: pointer;
-      opacity: 0.9;
-      transition: opacity 0.2s, transform 0.3s;
-    }
-
-    .pack-card img:hover {
-      opacity: 1;
-      transform: scale(1.02);
-    }
-
-    .pack-card-body {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .pack-card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: #fff;
-    }
-
-    .pack-badge {
-      align-self: flex-start;
-      font-size: 0.72rem;
-      padding: 4px 10px;
-      background: rgba(56, 189, 248, 0.15);
-      color: #38bdf8;
-      border-radius: 8px;
-      margin-bottom: 14px;
-      font-weight: 600;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-    }
-
-    .pack-card-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: auto;
-      padding-top: 15px;
-    }
-
-    /* MODAL PODGLĄDU */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(15px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 1000;
-    }
-
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .modal {
-      background: linear-gradient(145deg, #0f172a, #090e1a);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      border-radius: 24px;
-      width: 92%;
-      max-width: 650px;
-      padding: 35px;
-      position: relative;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.15);
-      transform: translateY(40px);
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .modal-overlay.active .modal {
-      transform: translateY(0);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #94a3b8;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      transition: background 0.2s, color 0.2s, transform 0.2s;
-    }
-
-    .modal-close:hover {
-      background: rgba(255, 255, 255, 0.15);
-      color: #fff;
-      transform: scale(1.05);
-    }
-
-    .modal h3 {
-      font-size: 1.6rem;
-      font-weight: 800;
-      margin-bottom: 15px;
-      color: #fff;
-    }
-
-    .modal-img-container {
-      width: 100%;
-      height: 240px;
-      border-radius: 16px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-      cursor: zoom-in;
-    }
-
-    .modal-img-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-
-    .modal-img-container:hover img {
-      transform: scale(1.03);
-    }
-
-    .modal-img-hint {
-      position: absolute;
-      bottom: 12px;
-      right: 12px;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(6px);
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-    }
-
-    .modal-details-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 18px;
-      border-radius: 16px;
-    }
-
-    .detail-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .detail-label {
-      font-size: 0.75rem;
-      color: #64748b;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    .detail-value {
-      font-size: 0.95rem;
-      color: #e2e8f0;
-      font-weight: 600;
-    }
-
-    .modal-tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .modal-tag {
-      font-size: 0.75rem;
-      padding: 3px 8px;
-      background: rgba(56, 189, 248, 0.15);
-      color: #38bdf8;
-      border-radius: 6px;
-      font-weight: 600;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-    }
-
-    .modal p {
-      font-size: 0.92rem;
-      color: #94a3b8;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
-
-    /* GALERIA MINIATUR W MODALU */
-    .modal-gallery-thumbs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      overflow-x: auto;
-      padding-bottom: 5px;
-    }
-
-    .modal-thumb {
-      width: 60px;
-      height: 45px;
-      border-radius: 8px;
-      object-fit: cover;
-      cursor: pointer;
-      opacity: 0.6;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: opacity 0.2s, border-color 0.2s, transform 0.2s;
-    }
-
-    .modal-thumb:hover, .modal-thumb.active {
-      opacity: 1;
-      border-color: #38bdf8;
-      transform: scale(1.05);
-    }
-
-    /* PEŁNOEKRANOWA GALERIA ZDJĘĆ */
-    .lightbox-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.94);
-      backdrop-filter: blur(20px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 2000;
-      padding: 20px;
-    }
-
-    .lightbox-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .lightbox-img {
-      max-width: 90vw;
-      max-height: 85vh;
-      object-fit: contain;
-      border-radius: 14px;
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.2);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      transform: scale(0.95);
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .lightbox-overlay.active .lightbox-img {
-      transform: scale(1);
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: 25px;
-      right: 25px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .lightbox-close:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: scale(1.05);
-    }
-
-    footer {
-      margin-top: auto;
-      text-align: center;
-      padding: 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 0.8rem;
-      color: #64748b;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Canvas dla nowoczesnej mgiełki -->
-  <canvas id="trail-canvas"></canvas>
-
-  <!-- Nawigacja -->
-  <nav>
-    <div class="logo" onclick="showSection('home-section')">
-      <img src="https://i.imgur.com/v41E0iC.png" alt="Xenon Logo" class="logo-icon">
-      <span>Xenon TxT</span>
-    </div>
-
-    <div class="nav-links">
-      <a id="nav-home" class="active" onclick="showSection('home-section')">Strona Główna</a>
-      <a id="nav-categories" onclick="showSection('categories-section')">TXT</a>
-      <a href="https://discord.gg/ArpKXfHWZv" target="_blank">Kontakt</a>
-    </div>
-  </nav>
-
-  <!-- STRONA GŁÓWNA -->
-  <div class="section active" id="home-section">
-    <div class="hero">
-      <h1 class="hero-title">
-        Znajdź <span class="highlight">Idealne TXT</span> Dla Siebie
-      </h1>
-      
-      <p>
-        Wybieraj z najlepszych, w pełni zoptymalizowanych paczek zasobów. Zwiększ swoje FPS-y, popraw widoczność w walce i zyskaj przewagę na każdym serwerze!
-      </p>
-
-      <div class="hero-discord-text">
-        Chcesz dodać własną paczkę na stronę? Dołącz teraz na 
-        <a href="https://discord.gg/ArpKXfHWZv" target="_blank">
-          <img src="https://i.imgur.com/MnqAhLk.png" alt="Discord" class="discord-inline-icon">
-        </a>
-      </div>
-
-      <div class="hero-buttons">
-        <button class="btn-primary" onclick="showSection('categories-section')">Przeglądaj Paczki</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- KATEGORIE (Pusta sekcja po usunięciu kafelków) -->
-  <div class="section" id="categories-section">
-    <div class="section-header">
-      <h2 class="grid-title">TXT</h2>
-    </div>
-
-    <div class="folder-grid">
-      <!-- Wszystkie kafelki serwerów zostały usunięte -->
-    </div>
-  </div>
-
-  <!-- PODKATEGORIA: ANARCHIA.GG -->
-  <div class="section" id="anarchia-section">
-    <div class="top-bar-large">
-      <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
-    </div>
-
-    <div class="server-hero-card">
-      <div class="server-hero-info">
-        <img src="https://i.imgur.com/5zdjpWE.png" alt="Anarchia.GG" class="server-hero-logo">
-        <div class="server-hero-text">
-          <h2>Anarchia.GG <span class="status-badge"><span class="status-dot"></span> Online</span></h2>
-          <div class="server-ip-large">
-            Oficjalny Adres IP: <strong>ANARCHIA.GG</strong>
-          </div>
-        </div>
-      </div>
-      <div class="action-btns-large">
-        <button class="btn-action-lg purple" onclick="copyIP('ANARCHIA.GG', this)">📋 Kopiuj IP</button>
-        <a href="https://anarchia.gg/" target="_blank" class="btn-action-lg">🛒 Sklep</a>
-        <a href="#" class="btn-action-lg">💬 Discord</a>
-      </div>
-    </div>
-
-    <div class="pack-grid">
-      <!-- PACZKA: FIOLETOWA SKLEJKA -->
-      <div class="pack-card" data-title="fioletowa sklejka loxe_3 lifesteal">
-        <img src="https://i.imgur.com/rIiA6eU.png" alt="Fioletowa sklejka" onclick="openModal('Fioletowa sklejka', ['https://i.imgur.com/rIiA6eU.png', 'https://i.imgur.com/NyZTKSy.png', 'https://i.imgur.com/izIKirU.png', 'https://i.imgur.com/okMWnz0.png'], 'luzna sklejka', 'loxe_3', 'lifesteal, pvp', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">
-        <div class="pack-card-body">
-          <span class="pack-badge">lifesteal</span>
-          <h3>Fioletowa sklejka</h3>
-          <div class="pack-card-actions">
-            <button class="btn-secondary" style="flex: 1;" onclick="openModal('Fioletowa sklejka', ['https://i.imgur.com/rIiA6eU.png', 'https://i.imgur.com/NyZTKSy.png', 'https://i.imgur.com/izIKirU.png', 'https://i.imgur.com/okMWnz0.png'], 'luzna sklejka', 'loxe_3', 'lifesteal, pvp', 'Anarchia.GG', '26.2', 'https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file')">Podgląd</button>
-            <a href="https://www.mediafire.com/file/w27qk3fuvhpjxz2/nwm_xdd_s67676767.zip/file" target="_blank" class="btn-primary" style="text-decoration: none; padding: 10px 16px;">Pobierz</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PODKATEGORIA: MINESTAR.GG -->
-  <div class="section" id="minestar-section">
-    <div class="top-bar-large">
-      <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
-    </div>
-
-    <div class="server-hero-card">
-      <div class="server-hero-info">
-        <img src="https://i.imgur.com/f2W0IET.png" alt="Minestar.gg" class="server-hero-logo">
-        <div class="server-hero-text">
-          <h2>Minestar.gg <span class="status-badge"><span class="status-dot"></span> Online</span></h2>
-          <div class="server-ip-large">
-            Oficjalny Adres IP: <strong>Minestar.gg</strong>
-          </div>
-        </div>
-      </div>
-      <div class="action-btns-large">
-        <button class="btn-action-lg purple" onclick="copyIP('Minestar.gg', this)">📋 Kopiuj IP</button>
-        <a href="https://minestar.gg/" target="_blank" class="btn-action-lg">🛒 Sklep</a>
-        <a href="#" class="btn-action-lg">💬 Discord</a>
-      </div>
-    </div>
-
-    <div class="pack-grid"></div>
-  </div>
-
-  <!-- PODKATEGORIA: RAPY.GG -->
-  <div class="section" id="rapy-section">
-    <div class="top-bar-large">
-      <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
-    </div>
-
-    <div class="server-hero-card">
-      <div class="server-hero-info">
-        <img src="https://i.imgur.com/0y4sFLI.png" alt="RAPY.GG" class="server-hero-logo">
-        <div class="server-hero-text">
-          <h2>RAPY.GG <span class="status-badge"><span class="status-dot"></span> Online</span></h2>
-          <div class="server-ip-large">
-            Oficjalny Adres IP: <strong>rapy.gg</strong>
-          </div>
-        </div>
-      </div>
-      <div class="action-btns-large">
-        <button class="btn-action-lg purple" onclick="copyIP('rapy.gg', this)">📋 Kopiuj IP</button>
-        <a href="https://rapy.gg" target="_blank" class="btn-action-lg">🛒 Sklep</a>
-        <a href="https://discord.com/invite/ZEJzue9TAy" target="_blank" class="btn-action-lg">💬 Discord</a>
-      </div>
-    </div>
-
-    <div class="pack-grid"></div>
-  </div>
-
-  <!-- PODKATEGORIA: SZEFY.PL -->
-  <div class="section" id="szefy-section">
-    <div class="top-bar-large">
-      <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
-    </div>
-
-    <div class="server-hero-card">
-      <div class="server-hero-info">
-        <img src="https://i.imgur.com/V2p0rbT.png" alt="Szefy.pl" class="server-hero-logo">
-        <div class="server-hero-text">
-          <h2>Szefy.pl <span class="status-badge"><span class="status-dot"></span> Online</span></h2>
-          <div class="server-ip-large">
-            Oficjalny Adres IP: <strong>szefy.pl</strong>
-          </div>
-        </div>
-      </div>
-      <div class="action-btns-large">
-        <button class="btn-action-lg purple" onclick="copyIP('szefy.pl', this)">📋 Kopiuj IP</button>
-        <a href="https://szefy.pl" target="_blank" class="btn-action-lg">🛒 Sklep</a>
-        <a href="https://discord.com/invite/wR7QAyyB5M" target="_blank" class="btn-action-lg">💬 Discord</a>
-      </div>
-    </div>
-
-    <div class="pack-grid"></div>
-  </div>
-
-  <!-- PODKATEGORIA: INNE -->
-  <div class="section" id="inne-section">
-    <div class="top-bar-large">
-      <button class="btn-secondary" onclick="showSection('categories-section')">← Powrót</button>
-    </div>
-
-    <div class="server-hero-card">
-      <div class="server-hero-info">
-        <div class="server-hero-text">
-          <h2>Pozostałe Paczki</h2>
-          <div class="server-ip-large">
-            Uniwersalne paczki tekstur dla każdego trybu
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pack-grid"></div>
-  </div>
-
-  <!-- MODAL PODGLĄDU -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      
-      <h3 id="modalTitle">Nazwa Paczki</h3>
-      
-      <div class="modal-img-container" onclick="openLightbox()">
-        <img id="modalImg" src="" alt="Podgląd">
-        <div class="modal-img-hint">🔍 Kliknij, aby powiększyć</div>
-      </div>
-
-      <!-- Galeria miniatur -->
-      <div class="modal-gallery-thumbs" id="modalGalleryThumbs"></div>
-
-      <div class="modal-details-grid">
-        <div class="detail-item">
-          <span class="detail-label">Autor</span>
-          <span class="detail-value" id="modalAuthor">-</span>
-        </div>
-        <div class="detail-item">
-          <span class="detail-label">Dedykowany Serwer</span>
-          <span class="detail-value" id="modalServer">-</span>
-        </div>
-        <div class="detail-item">
-          <span class="detail-label">Wersja Minecraft</span>
-          <span class="detail-value" id="modalVersion">-</span>
-        </div>
-        <div class="detail-item">
-          <span class="detail-label">Tagi</span>
-          <div class="modal-tags" id="modalTags"></div>
-        </div>
-      </div>
-
-      <p id="modalDesc">Opis paczki...</p>
-      
-      <a id="modalDownload" href="#" target="_blank" class="btn-primary" style="display: block; text-align: center; text-decoration: none;">Pobierz Paczkę (.ZIP)</a>
-    </div>
-  </div>
-
-  <!-- PEŁNOEKRANOWY PODGLĄD ZDJĘCIA -->
-  <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
-    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-    <img id="lightboxImg" class="lightbox-img" src="" alt="Powiększone zdjęcie" onclick="event.stopPropagation()">
-  </div>
-
-  <footer>
-    <p>© 2026 Xenon TxT. Wszystkie prawa zastrzeżone.</p>
-  </footer>
-
-  <script>
-    /* ======================================================
-        SKRYPT BIAŁEJ SMUGI / MGIEŁKI KURSORA (GLOW TRAIL)
-        ====================================================== */
-    const canvas = document.getElementById('trail-canvas');
-    const ctx = canvas.getContext('2d');
-
-    let particles = [];
-    const maxParticles = 40;
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.size = Math.random() * 45 + 35;
-        this.alpha = 0.35;
-        this.color = { r: 56, g: 189, b: 248 };
-        this.vx = (Math.random() - 0.5) * 0.6;
-        this.vy = (Math.random() - 0.5) * 0.6;
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.alpha -= 0.009;
-        if (this.size > 2) this.size -= 0.3;
-      }
-
-      draw() {
-        ctx.save();
-        ctx.globalCompositeOperation = 'screen';
-        const gradient = ctx.createRadialGradient(
-          this.x, this.y, 0,
-          this.x, this.y, this.size
-        );
-        gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`);
-        gradient.addColorStop(0.6, `rgba(129, 140, 248, ${this.alpha * 0.4})`);
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-    }
-
-    window.addEventListener('mousemove', (e) => {
-      for (let i = 0; i < 2; i++) {
-        particles.push(new Particle(
-          e.clientX + (Math.random() - 0.5) * 10,
-          e.clientY + (Math.random() - 0.5) * 10
-        ));
-      }
-      if (particles.length > maxParticles) {
-        particles.splice(0, particles.length - maxParticles);
-      }
-    });
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = particles.length - 1; i >= 0; i--) {
-        particles[i].update();
-        particles[i].draw();
-        if (particles[i].alpha <= 0 || particles[i].size <= 0) {
-          particles.splice(i, 1);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XenonCore | Nowoczesne Usługi IT & Skrypty</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0b0914',
+                        cardDark: '#131022',
+                        purpleAccent: '#9333ea',
+                        purpleHover: '#7e22ce',
+                        neonViolet: '#c084fc'
+                    }
+                }
+            }
         }
-      }
-      requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; background-color: #0b0914; color: #f3f4f6; }
+        .code-font { font-family: 'Fira Code', monospace; }
+        
+        .glass-card { background: rgba(19, 16, 34, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(147, 51, 234, 0.15); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        .glass-card:hover { border-color: rgba(168, 85, 247, 0.5); box-shadow: 0 0 30px rgba(147, 51, 234, 0.2); }
+        header.nav-glass { background: rgba(11, 9, 20, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(147, 51, 234, 0.15); }
 
-    /* ======================================================
-        LOGIKA NAWIGACJI I MODALI
-        ====================================================== */
-    function showSection(sectionId) {
-      document.querySelectorAll('.section').forEach(sec => {
-        sec.classList.remove('active');
-      });
-      document.getElementById(sectionId).classList.add('active');
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        .floating { animation: float 6s ease-in-out infinite; }
+        
+        .glow-btn { box-shadow: 0 0 25px rgba(147, 51, 234, 0.4); }
+        .glow-btn:hover { box-shadow: 0 0 35px rgba(168, 85, 247, 0.6); }
 
-      document.querySelectorAll('.nav-links a').forEach(link => {
-        link.classList.remove('active');
-      });
-      if (sectionId === 'home-section') {
-        const homeLink = document.getElementById('nav-home');
-        if (homeLink) homeLink.classList.add('active');
-      } else if (sectionId === 'categories-section' || sectionId.includes('-section')) {
-        const catLink = document.getElementById('nav-categories');
-        if (catLink) catLink.classList.add('active');
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+    </style>
+</head>
+<body class="selection:bg-purple-600 selection:text-white">
 
-    let currentImages = [];
-    let currentImageIndex = 0;
+    <!-- Cyber Grid & Nodes Background Animation -->
+    <canvas id="particleCanvas"></canvas>
 
-    function openModal(title, images, desc, author, tags, server, version, downloadUrl) {
-      currentImages = images;
-      currentImageIndex = 0;
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 nav-glass transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-3.5 group">
+                <img src="https://i.imgur.com/HFjXPpE.png" alt="XenonCore Logo" class="h-11 w-11 rounded-xl object-cover border border-purple-500/40 group-hover:border-neonViolet group-hover:scale-105 transition-all duration-300 shadow-lg">
+                <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-white via-purple-300 to-neonViolet bg-clip-text text-transparent">XenonCore</span>
+            </a>
+            
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium opacity-90">
+                <a href="#uslugi" class="hover:text-purple-400 transition-colors">Usługi</a>
+                <a href="#skrypt-lab" class="hover:text-purple-400 transition-colors">Skrypt Lab</a>
+                <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="hover:text-purple-400 transition-colors flex items-center space-x-1.5">
+                    <i class="fab fa-discord text-indigo-400"></i>
+                    <span>Discord</span>
+                </a>
+            </nav>
 
-      document.getElementById('modalTitle').textContent = title;
-      document.getElementById('modalImg').src = currentImages[0];
-      document.getElementById('modalDesc').textContent = desc;
-      document.getElementById('modalAuthor').textContent = author;
-      document.getElementById('modalServer').textContent = server;
-      document.getElementById('modalVersion').textContent = version;
-      document.getElementById('modalDownload').href = downloadUrl;
+            <div class="flex items-center space-x-3">
+                <button onclick="openModal()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm glow-btn transition-all duration-300 transform hover:-translate-y-0.5">
+                    Rozpocznij projekt
+                </button>
+            </div>
+        </div>
+    </header>
 
-      const tagsContainer = document.getElementById('modalTags');
-      tagsContainer.innerHTML = '';
-      tags.split(',').forEach(tag => {
-        const span = document.createElement('span');
-        span.className = 'modal-tag';
-        span.textContent = tag.trim();
-        tagsContainer.appendChild(span);
-      });
+    <!-- Hero Section -->
+    <section class="relative pt-36 pb-24 md:pt-48 md:pb-36 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+        <div class="md:w-1/2 text-center md:text-left mb-12 md:mb-0">
+            <div class="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold mb-6 shadow-inner">
+                <span class="w-2 h-2 rounded-full bg-purple-500 animate-ping"></span>
+                <span>Nowoczesny Software & Web Development</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] mb-6">
+                Wynieś swój projekt na <span class="bg-gradient-to-r from-purple-400 via-indigo-400 to-neonViolet bg-clip-text text-transparent">wyższy poziom</span>
+            </h1>
+            <p class="opacity-80 text-base sm:text-lg mb-8 max-w-xl mx-auto md:mx-0 leading-relaxed">
+                Kompleksowe usługi informatyczne: profesjonalne strony, grafika użytkowa, skrypty pod Skript, tanie pliki TXT oraz gotowe szablony Discord.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+                <button onclick="openModal()" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-bold text-base glow-btn transition-all duration-300 text-center transform hover:-translate-y-0.5">
+                    Rozpocznij projekt
+                </button>
+                <a href="#uslugi" class="w-full sm:w-auto glass-card hover:bg-purple-500/10 px-8 py-4 rounded-xl font-semibold text-base transition-all duration-300 text-center">
+                    Przeglądaj ofertę
+                </a>
+            </div>
+        </div>
 
-      const thumbsContainer = document.getElementById('modalGalleryThumbs');
-      thumbsContainer.innerHTML = '';
-      if (currentImages.length > 1) {
-        thumbsContainer.style.display = 'flex';
-        currentImages.forEach((imgSrc, index) => {
-          const thumb = document.createElement('img');
-          thumb.src = imgSrc;
-          thumb.className = 'modal-thumb' + (index === 0 ? ' active' : '');
-          thumb.onclick = () => {
-            currentImageIndex = index;
-            document.getElementById('modalImg').src = imgSrc;
-            document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
-            thumb.classList.add('active');
-          };
-          thumbsContainer.appendChild(thumb);
+        <div class="md:w-1/2 flex justify-center">
+            <div class="relative w-80 h-80 sm:w-96 sm:h-96 floating">
+                <div class="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-indigo-500/20 rounded-3xl blur-3xl transform rotate-6 scale-95"></div>
+                <div class="relative glass-card rounded-3xl p-8 w-full h-full flex flex-col items-center justify-center shadow-2xl group">
+                    <div class="absolute top-4 right-4 flex space-x-1.5 opacity-60">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    </div>
+                    <img src="https://i.imgur.com/HFjXPpE.png" alt="XenonCore Logo" class="w-44 h-44 object-cover rounded-2xl shadow-xl border border-purple-500/30 mb-5 group-hover:scale-105 transition-transform duration-500">
+                    <h3 class="text-xl font-bold tracking-wide">XenonCore Studio</h3>
+                    <p class="text-xs text-purple-400 mt-1 font-medium tracking-widest uppercase">Innowacje w cenie</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="uslugi" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 tracking-tight">Nasze <span class="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Usługi</span></h2>
+            <p class="opacity-80 text-base">Wybierz profesjonalizm i niezawodność. Oferujemy konkurencyjne ceny oraz możliwość wymiany za zaproszenia na Discord.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="glass-card p-8 rounded-3xl transition-all duration-300 group flex flex-col justify-between">
+                <div>
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-2xl mb-6 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Pisanie Stron</h3>
+                    <p class="opacity-75 text-sm leading-relaxed mb-6">Nowoczesne, w pełni responsywne i szybkie strony internetowe dopasowane indywidualnie do Twojego projektu lub biznesu.</p>
+                </div>
+                <button onclick="openModal()" class="text-purple-400 text-sm font-semibold flex items-center space-x-2 hover:opacity-80 transition-opacity">
+                    <span>Zamów projekt</span>
+                    <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl transition-all duration-300 group flex flex-col justify-between">
+                <div>
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-2xl mb-6 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Grafiki</h3>
+                    <p class="opacity-75 text-sm leading-relaxed mb-6">Profesjonalna identyfikacja wizualna, unikalne logotypy, przyciągające wzrok bannery oraz grafiki społecznościowe.</p>
+                </div>
+                <button onclick="openModal()" class="text-purple-400 text-sm font-semibold flex items-center space-x-2 hover:opacity-80 transition-opacity">
+                    <span>Zamów grafikę</span>
+                    <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl transition-all duration-300 group flex flex-col justify-between">
+                <div>
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-2xl mb-6 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
+                        <i class="fas fa-terminal"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Skrypty (Skript)</h3>
+                    <p class="opacity-75 text-sm leading-relaxed mb-6">Autorskie, maksymalnie zoptymalizowane skrypty pod plugin Skript na serwery Minecraft (BoxPvP, systemy specjalne).</p>
+                </div>
+                <button onclick="openModal()" class="text-purple-400 text-sm font-semibold flex items-center space-x-2 hover:opacity-80 transition-opacity">
+                    <span>Zamów skrypt</span>
+                    <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl transition-all duration-300 group flex flex-col justify-between">
+                <div>
+                    <div class="w-14 h-14 rounded-2xl bg-fuchsia-500/10 border border-fuchsia-500/20 flex items-center justify-center text-fuchsia-400 text-2xl mb-6 group-hover:scale-110 group-hover:bg-fuchsia-500/20 transition-all">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Pliki TXT</h3>
+                    <p class="opacity-75 text-sm leading-relaxed mb-6">Gotowe konfiguracje oraz pliki tekstowe TXT w niezwykle niskich cenach lub całkowicie za zaproszenia na Discord!</p>
+                </div>
+                <button onclick="openModal()" class="text-purple-400 text-sm font-semibold flex items-center space-x-2 hover:opacity-80 transition-opacity">
+                    <span>Sprawdź szczegóły</span>
+                    <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl transition-all duration-300 group md:col-span-2 lg:col-span-2 flex flex-col justify-between">
+                <div>
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-2xl mb-6 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all">
+                        <i class="fab fa-discord"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Szablony Discord</h3>
+                    <p class="opacity-75 text-sm leading-relaxed mb-6">Estetycznie poukładane, w pełni zabezpieczone i skonfigurowane szablony serwerów Discord pod community, serwery Minecraft lub projekty biznesowe – gotowe do wdrożenia jednym kliknięciem.</p>
+                </div>
+                <button onclick="openModal()" class="text-purple-400 text-sm font-semibold flex items-center space-x-2 hover:opacity-80 transition-opacity">
+                    <span>Wybierz szablon</span>
+                    <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skrypt Minecraft Lab Section -->
+    <section id="skrypt-lab" class="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+        <div class="text-center mb-12">
+            <span class="text-xs font-bold uppercase tracking-widest text-purple-400 mb-2 block">Próbka kodu</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-3">Skrypt Minecraft Lab</h2>
+            <p class="opacity-75 text-sm sm:text-base">Zobacz przykład czystego kodu napisanego w pluginie Skript.</p>
+        </div>
+
+        <div class="glass-card rounded-2xl overflow-hidden shadow-2xl border border-purple-500/20">
+            <!-- Window Top Bar -->
+            <div class="bg-[#18152b] px-4 py-3 flex items-center justify-between border-b border-purple-500/10">
+                <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span class="ml-3 text-xs opacity-50 code-font">xenon_core.sk</span>
+                </div>
+                <div class="text-xs opacity-40 code-font hidden sm:block">Skript 2.8+ • Minecraft 1.20+</div>
+            </div>
+
+            <!-- Code Content -->
+            <div class="p-6 sm:p-8 overflow-x-auto code-font text-xs sm:text-sm leading-relaxed text-gray-300">
+                <p><span class="text-purple-400 font-semibold">command</span> <span class="text-neonViolet">/xenoncore</span>:</p>
+                <p class="pl-4"><span class="text-purple-400 font-semibold">trigger</span>:</p>
+                <p class="pl-8 text-gray-400">open chest inventory with 3 rows named <span class="text-green-400">"&b&lXENONCORE USŁUGI"</span> to player</p>
+                <p class="pl-8 text-gray-400">set <span class="text-yellow-400">slot 13</span> of player's inventory to <span class="text-orange-400">nether star</span> named <span class="text-green-400">"&a&lDołącz na Discord"</span></p>
+                <p class="pl-8 text-gray-400">send <span class="text-green-400">"&8[&bXenonCore&8] &7otwarto menu usług!"</span> to player</p>
+                <br>
+                <p><span class="text-purple-400 font-semibold">on inventory click</span>:</p>
+                <p class="pl-4"><span class="text-purple-400 font-semibold">if</span> name of player's current inventory is <span class="text-green-400">"&b&lXENONCORE USŁUGI"</span>:</p>
+                <p class="pl-8 text-purple-300">cancel event</p>
+                <p class="pl-8"><span class="text-purple-400 font-semibold">if</span> clicked slot is <span class="text-yellow-400">13</span>:</p>
+                <p class="pl-12 text-gray-400">send <span class="text-green-400">"&bSprawdzaj nasz Discord w celu rozpoczęcia projektu!"</span> to player</p>
+                <p class="pl-12 text-purple-300">close player's inventory</p>
+            </div>
+
+            <!-- Window Footer -->
+            <div class="bg-[#18152b]/60 px-6 py-3 border-t border-purple-500/10 flex items-center justify-between text-xs opacity-75">
+                <span>Skript 2.8+ • Minecraft 1.20+</span>
+                <button onclick="openModal()" class="text-purple-400 hover:text-purple-300 font-semibold transition-colors flex items-center space-x-1.5">
+                    <i class="fab fa-discord"></i>
+                    <span>Zamów własny skrypt</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-purple-500/10 py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between opacity-75 text-sm">
+        <div class="flex items-center space-x-3 mb-4 sm:mb-0">
+            <img src="https://i.imgur.com/HFjXPpE.png" alt="XenonCore Logo" class="h-8 w-8 rounded-lg object-cover">
+            <span class="font-bold">XenonCore</span>
+            <span>&copy; 2026 Wszelkie prawa zastrzeżone.</span>
+        </div>
+        <div class="flex items-center space-x-6">
+            <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="hover:text-purple-400 transition-colors flex items-center space-x-2"><i class="fab fa-discord text-lg"></i> <span>Discord Community</span></a>
+        </div>
+    </footer>
+
+    <!-- Discord Modal Popup -->
+    <div id="discordModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md hidden transition-opacity">
+        <div class="glass-card p-8 rounded-3xl max-w-md w-full mx-4 shadow-2xl relative text-center transform transition-all scale-95 opacity-0" id="modalContent">
+            <button onclick="closeModal()" class="absolute top-4 right-4 opacity-70 hover:opacity-100 transition-opacity w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="w-16 h-16 bg-[#5865F2]/20 border border-[#5865F2]/40 rounded-2xl flex items-center justify-center text-[#5865F2] text-3xl mx-auto mb-6 shadow-lg">
+                <i class="fab fa-discord"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Dołącz do XenonCore</h3>
+            <p class="opacity-75 text-sm mb-8 leading-relaxed">Aby rozpocząć współpracę, złożyć zamówienie na skrypt/stronę lub odebrać pliki TXT za zaproszenia, wejdź na nasz serwer Discord!</p>
+            <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="block w-full bg-[#5865F2] hover:bg-[#4752c4] text-white py-4 rounded-xl font-bold text-base shadow-xl transition-all mb-3 text-center transform hover:-translate-y-0.5">
+                Przejdź na Discord
+            </a>
+            <button onclick="closeModal()" class="text-sm opacity-70 hover:opacity-100 transition-opacity py-2">
+                Zamknij okno
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const modal = document.getElementById('discordModal');
+        const modalContent = document.getElementById('modalContent');
+
+        function openModal() {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
         });
-      } else {
-        thumbsContainer.style.display = 'none';
-      }
 
-      document.getElementById('modalOverlay').classList.add('active');
-    }
+        // Advanced Cyber Grid & Nodes Background Animation
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
 
-    function closeModal() {
-      document.getElementById('modalOverlay').classList.remove('active');
-    }
+        let particlesArray = [];
+        const numberOfParticles = 45;
+        let connectionDistance = 140;
 
-    function openLightbox() {
-      const activeImgSrc = document.getElementById('modalImg').src;
-      document.getElementById('lightboxImg').src = activeImgSrc;
-      document.getElementById('lightboxOverlay').classList.add('active');
-    }
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
 
-    function closeLightbox() {
-      document.getElementById('lightboxOverlay').classList.remove('active');
-    }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-    function copyIP(text, btnElement) {
-      navigator.clipboard.writeText(text).then(() => {
-        const originalText = btnElement.innerHTML;
-        btnElement.innerHTML = '✔ Skopiowano!';
-        btnElement.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
-        setTimeout(() => {
-          btnElement.innerHTML = originalText;
-          btnElement.style.background = '';
-        }, 2000);
-      });
-    }
-  </script>
+        class Node {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1.5;
+                this.speedX = (Math.random() - 0.5) * 0.6;
+                this.speedY = (Math.random() - 0.5) * 0.6;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                else if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                else if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(192, 132, 252, 0.7)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initNodes() {
+            particlesArray = [];
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Node());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+
+                for (let j = i + 1; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        const opacity = (1 - (distance / connectionDistance)) * 0.35;
+                        ctx.strokeStyle = `rgba(168, 85, 247, ${opacity})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        initNodes();
+        animate();
+    </script>
 </body>
 </html>
