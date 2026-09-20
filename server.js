@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 
 // Połączenie z bazą danych MongoDB (wklej swój link w cudzysłowie)
-const MONGO_URL = process.env.MONGO_URL || 'TUTAJ_WKLEJ_SWOJ_LINK_DO_BAZY_DANYCH';
+const MONGO_URL = process.env.MONGO_URL || 'sb_publishable_NULud57iCyPMegec4pcJNw_Zw0Zbg3u';
 
 mongoose.connect(MONGO_URL)
     .then(() => console.log('Połączono z bazą MongoDB! 🚀'))
