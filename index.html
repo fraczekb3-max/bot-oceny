@@ -31,7 +31,8 @@
         .code-font { font-family: 'Fira Code', monospace; }
         
         .glass-card { background: rgba(19, 16, 34, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(147, 51, 234, 0.15); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
-        .glass-card:hover { border-color: rgba(168, 85, 247, 0.5); box-shadow: 0 0 30px rgba(147, 51, 234, 0.2); }
+        .glass-card:hover { border-color: rgba(168, 85, 247, 0.5); box-shadow: 0 0 30px rgba(147, 51, 234, 0.25); transform: translateY(-3px); transition: all 0.3s ease; }
+        
         header.nav-glass { background: rgba(11, 9, 20, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(147, 51, 234, 0.15); }
 
         @keyframes float {
@@ -41,15 +42,34 @@
         .floating { animation: float 6s ease-in-out infinite; }
         
         .glow-btn { box-shadow: 0 0 25px rgba(147, 51, 234, 0.4); }
-        .glow-btn:hover { box-shadow: 0 0 35px rgba(168, 85, 247, 0.6); }
+        .glow-btn:hover { box-shadow: 0 0 35px rgba(168, 85, 247, 0.7); }
 
         canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+        /* Toast notification */
+        #toast {
+            visibility: hidden;
+            transform: translateX(-50%) translateY(20px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        #toast.show {
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="selection:bg-purple-600 selection:text-white">
 
-    <!-- Cyber Grid & Nodes Background Animation -->
+    <!-- Ulepszone, dynamiczne tło z neonową siatką i pulsującymi światłami -->
     <canvas id="particleCanvas"></canvas>
+
+    <!-- Toast Notification Popup -->
+    <div id="toast" class="fixed bottom-6 left-1/2 z-50 bg-purple-900/90 border border-purple-500/50 text-white px-6 py-3 rounded-xl shadow-2xl backdrop-blur-md flex items-center space-x-3 text-sm font-semibold">
+        <i class="fas fa-check-circle text-neonViolet text-lg"></i>
+        <span id="toastMessage">Skopiowano tekst do schowka!</span>
+    </div>
 
     <!-- Navigation Header -->
     <header class="fixed top-0 left-0 right-0 z-50 nav-glass transition-colors duration-300">
@@ -61,6 +81,7 @@
             
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium opacity-90">
                 <a href="#uslugi" class="hover:text-purple-400 transition-colors">Usługi</a>
+                <a href="#kalkulator" class="hover:text-purple-400 transition-colors">Kalkulator</a>
                 <a href="#skrypt-lab" class="hover:text-purple-400 transition-colors">Skrypt Lab</a>
                 <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="hover:text-purple-400 transition-colors flex items-center space-x-1.5">
                     <i class="fab fa-discord text-indigo-400"></i>
@@ -70,7 +91,7 @@
 
             <div class="flex items-center space-x-3">
                 <button onclick="openModal()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm glow-btn transition-all duration-300 transform hover:-translate-y-0.5">
-                    Rozpocznij projekt
+                    Stwórz&nbsp;&nbsp;&nbsp;&nbsp;zamówienie
                 </button>
             </div>
         </div>
@@ -81,20 +102,20 @@
         <div class="md:w-1/2 text-center md:text-left mb-12 md:mb-0">
             <div class="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold mb-6 shadow-inner">
                 <span class="w-2 h-2 rounded-full bg-purple-500 animate-ping"></span>
-                <span>Nowoczesny Software & Web Development</span>
+                <span>Nowoczesne Usługi IT & Skrypty • Profesjonalne Podejście</span>
             </div>
             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] mb-6">
                 Wynieś swój projekt na <span class="bg-gradient-to-r from-purple-400 via-indigo-400 to-neonViolet bg-clip-text text-transparent">wyższy poziom</span>
             </h1>
             <p class="opacity-80 text-base sm:text-lg mb-8 max-w-xl mx-auto md:mx-0 leading-relaxed">
-                Kompleksowe usługi informatyczne: profesjonalne strony, grafika użytkowa, skrypty pod Skript, paczki TXT do Minecrafta oraz gotowe szablony Discord.
+                Strony internetowe, profesjonalne grafiki, autorskie skrypty pod Skript oraz paczki tekstur. Sprawdź nasze usługi i zamów szybko przez Discord!
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
                 <button onclick="openModal()" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-bold text-base glow-btn transition-all duration-300 text-center transform hover:-translate-y-0.5">
-                    Rozpocznij projekt
+                    Zamów przez Discord
                 </button>
                 <a href="#uslugi" class="w-full sm:w-auto glass-card hover:bg-purple-500/10 px-8 py-4 rounded-xl font-semibold text-base transition-all duration-300 text-center">
-                    Przeglądaj ofertę
+                    Przeglądaj Usługi
                 </a>
             </div>
         </div>
@@ -110,7 +131,7 @@
                     </div>
                     <img src="https://i.imgur.com/HFjXPpE.png" alt="XenonCore Logo" class="w-44 h-44 object-cover rounded-2xl shadow-xl border border-purple-500/30 mb-5 group-hover:scale-105 transition-transform duration-500">
                     <h3 class="text-xl font-bold tracking-wide">XenonCore Studio</h3>
-                    <p class="text-xs text-purple-400 mt-1 font-medium tracking-widest uppercase">Innowacje w cenie</p>
+                    <p class="text-xs text-purple-400 mt-1 font-medium tracking-widest uppercase">xenon | shop</p>
                 </div>
             </div>
         </div>
@@ -120,31 +141,39 @@
     <section id="uslugi" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="text-center max-w-3xl mx-auto mb-16">
             <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 tracking-tight">Nasze <span class="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Usługi</span></h2>
-            <p class="opacity-80 text-base">Wybierz profesjonalizm i niezawodność. Oferujemy konkurencyjne ceny oraz możliwość wymiany za zaproszenia na Discord.</p>
+            <p class="opacity-80 text-base">Wybierz niezawodność, unikalny design oraz błyskawiczną realizację zleceń w atrakcyjnych cenach.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="glass-card p-8 rounded-3xl transition-all duration-300 group flex flex-col justify-between">
+            <!-- Service 1 -->
+            <div class="glass-card p-8 rounded-3xl group flex flex-col justify-between">
                 <div>
-                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-2xl mb-6 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
-                        <i class="fas fa-code"></i>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-2xl group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <span class="text-neonViolet font-extrabold text-sm code-font bg-purple-500/10 px-3 py-1.5 rounded-xl border border-purple-500/20">od 25 zł</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Pisanie Stron</h3>
-                    <p class="opacity-75 text-sm leading-relaxed mb-6">Nowoczesne, w pełni responsywne i szybkie strony internetowe dopasowane indywidualnie do Twojego projektu lub biznesu.</p>
+                    <h3 class="text-xl font-bold mb-3">Strona (Tylko Kod)</h3>
+                    <p class="opacity-75 text-sm leading-relaxed mb-6">Nowoczesne landing page, portfolia i strony wizytówkowe wykonane w czystym kodzie dopasowane pod Twoje wymagania.</p>
                 </div>
                 <button onclick="openModal()" class="text-purple-400 text-sm font-semibold flex items-center space-x-2 hover:opacity-80 transition-opacity">
-                    <span>Zamów projekt</span>
+                    <span>Zamów stronę</span>
                     <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
                 </button>
             </div>
 
-            <div class="glass-card p-8 rounded-3xl transition-all duration-300 group flex flex-col justify-between">
+            <!-- Service 2 -->
+            <div class="glass-card p-8 rounded-3xl group flex flex-col justify-between">
                 <div>
-                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-2xl mb-6 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all">
-                        <i class="fas fa-paint-brush"></i>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-2xl group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <span class="text-neonViolet font-extrabold text-sm code-font bg-purple-500/10 px-3 py-1.5 rounded-xl border border-purple-500/20">od 5 zł</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Grafiki</h3>
-                    <p class="opacity-75 text-sm leading-relaxed mb-6">Profesjonalna identyfikacja wizualna, unikalne logotypy, przyciągające wzrok bannery oraz grafiki społecznościowe.</p>
+                    <h3 class="text-xl font-bold mb-3">Grafiki i Plakaty</h3>
+                    <p class="opacity-75 text-sm leading-relaxed mb-6">Unikalne logo pod projekt (5 zł), przyciągające wzrok plakaty/banery (10 zł) oraz grafiki na Discorda (10–20 zł).</p>
                 </div>
                 <button onclick="openModal()" class="text-purple-400 text-sm font-semibold flex items-center space-x-2 hover:opacity-80 transition-opacity">
                     <span>Zamów grafikę</span>
@@ -152,13 +181,17 @@
                 </button>
             </div>
 
-            <div class="glass-card p-8 rounded-3xl transition-all duration-300 group flex flex-col justify-between">
+            <!-- Service 3 -->
+            <div class="glass-card p-8 rounded-3xl group flex flex-col justify-between">
                 <div>
-                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-2xl mb-6 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
-                        <i class="fas fa-terminal"></i>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-2xl group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
+                            <i class="fas fa-terminal"></i>
+                        </div>
+                        <span class="text-neonViolet font-extrabold text-sm code-font bg-purple-500/10 px-3 py-1.5 rounded-xl border border-purple-500/20">od 5 zł</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Skrypty (Skript)</h3>
-                    <p class="opacity-75 text-sm leading-relaxed mb-6">Autorskie, maksymalnie zoptymalizowane skrypty pod plugin Skript na serwery Minecraft (BoxPvP, systemy specjalne).</p>
+                    <h3 class="text-xl font-bold mb-3">Skrypty Skript</h3>
+                    <p class="opacity-75 text-sm leading-relaxed mb-6">Customowe rozwiązania pod plugin Skript na zamówienie (5–20 zł) lub gotowe sprawdzone skrypty z katalogu (5–10 zł).</p>
                 </div>
                 <button onclick="openModal()" class="text-purple-400 text-sm font-semibold flex items-center space-x-2 hover:opacity-80 transition-opacity">
                     <span>Zamów skrypt</span>
@@ -166,32 +199,94 @@
                 </button>
             </div>
 
-            <div class="glass-card p-8 rounded-3xl transition-all duration-300 group flex flex-col justify-between">
+            <!-- Service 4 -->
+            <div class="glass-card p-8 rounded-3xl group flex flex-col justify-between">
                 <div>
-                    <div class="w-14 h-14 rounded-2xl bg-fuchsia-500/10 border border-fuchsia-500/20 flex items-center justify-center text-fuchsia-400 text-2xl mb-6 group-hover:scale-110 group-hover:bg-fuchsia-500/20 transition-all">
-                        <i class="fas fa-file-alt"></i>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-fuchsia-500/10 border border-fuchsia-500/20 flex items-center justify-center text-fuchsia-400 text-2xl group-hover:scale-110 group-hover:bg-fuchsia-500/20 transition-all">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <span class="text-neonViolet font-extrabold text-sm code-font bg-purple-500/10 px-3 py-1.5 rounded-xl border border-purple-500/20">od 0 zł</span>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Paczka TXT</h3>
-                    <p class="opacity-75 text-sm leading-relaxed mb-6">Zoptymalizowana paczka tekstur Minecraft w niezwykle niskich cenach lub całkowicie za zaproszenia na Discord!</p>
+                    <p class="opacity-75 text-sm leading-relaxed mb-6">Zoptymalizowane tekstury Minecraft zwiększające komfort, płynność oraz estetykę rozgrywki (0-5 zł).</p>
                 </div>
                 <button onclick="openModal()" class="text-purple-400 text-sm font-semibold flex items-center space-x-2 hover:opacity-80 transition-opacity">
-                    <span>Sprawdź szczegóły</span>
+                    <span>Odbierz TXT</span>
                     <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
                 </button>
             </div>
 
-            <div class="glass-card p-8 rounded-3xl transition-all duration-300 group md:col-span-2 lg:col-span-2 flex flex-col justify-between">
+            <!-- Service 5 -->
+            <div class="glass-card p-8 rounded-3xl group md:col-span-2 lg:col-span-2 flex flex-col justify-between">
                 <div>
-                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-2xl mb-6 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all">
-                        <i class="fab fa-discord"></i>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-2xl group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all">
+                            <i class="fab fa-discord"></i>
+                        </div>
+                        <span class="text-neonViolet font-extrabold text-sm code-font bg-purple-500/10 px-3 py-1.5 rounded-xl border border-purple-500/20">od 0 zł</span>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Szablony Discord</h3>
-                    <p class="opacity-75 text-sm leading-relaxed mb-6">Estetycznie poukładane, w pełni zabezpieczone i skonfigurowane szablony serwerów Discord pod community, serwery Minecraft lub projekty biznesowe – gotowe do wdrożenia jednym kliknięciem.</p>
+                    <p class="opacity-75 text-sm leading-relaxed mb-6">Gotowe, profesjonalne ustawienia serwerów, role, kanały, zabezpieczenia oraz kompletna konfiguracja pod Twój projekt (0-5 zł).</p>
                 </div>
                 <button onclick="openModal()" class="text-purple-400 text-sm font-semibold flex items-center space-x-2 hover:opacity-80 transition-opacity">
                     <span>Wybierz szablon</span>
                     <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
                 </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Cost Calculator Section -->
+    <section id="kalkulator" class="py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <span class="text-xs font-bold uppercase tracking-widest text-purple-400 mb-2 block">Darmowa wycena i generator</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-3">Interaktywny Kalkulator Wyceny</h2>
+            <p class="opacity-75 text-sm">Wybierz usługę, skopiuj gotowy format zamówienia i wklej go na Discordzie!</p>
+        </div>
+
+        <div class="glass-card p-6 sm:p-10 rounded-3xl shadow-2xl border border-purple-500/20">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 items-center">
+                <div>
+                    <label class="block text-sm font-semibold mb-3 text-purple-300">Wybierz główną usługę:</label>
+                    <select id="calcService" onchange="calculatePrice()" class="w-full bg-[#18152b] border border-purple-500/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonViolet transition-colors text-white">
+                        <option value="25-100">Strona internetowa (Landing / Portfolio) – od 25 zł</option>
+                        <option value="5-5">Grafika - Logo – od 5 zł</option>
+                        <option value="10-10">Grafika - Plakaty / Banery – od 10 zł</option>
+                        <option value="10-20">Grafika DC (Weryfikacja itd) – od 10 zł</option>
+                        <option value="5-20">Skrypty na plugin Skript (Custom) – od 5 zł</option>
+                        <option value="5-10">Skrypty z katalogu – od 5 zł</option>
+                        <option value="0-5">Szablony DC – od 0 zł</option>
+                        <option value="0-10" selected>Paczka TXT – od 0 zł</option>
+                    </select>
+                </div>
+                
+                <div class="flex flex-col items-center justify-center text-center">
+                    <label class="block text-sm font-semibold mb-3 text-purple-300">Dodatkowe opcje / priorytet:</label>
+                    <div class="bg-[#18152b]/60 px-5 py-3 rounded-xl border border-purple-500/15 inline-flex items-center justify-center w-full">
+                        <label class="flex items-center space-x-3 cursor-pointer text-sm justify-center">
+                            <input type="checkbox" id="calcExpress" onchange="calculatePrice()" class="w-4 h-4 rounded accent-purple-600">
+                            <span>Ekspresowa realizacja (+5-10 zł)</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-purple-500/15 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs opacity-60 uppercase tracking-widest block mb-1">Szacunkowy koszt:</span>
+                    <div class="text-3xl font-extrabold text-neonViolet code-font" id="calcTotal">0 – 10 PLN</div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                    <button onclick="copyOrderTemplate()" class="w-full sm:w-auto bg-[#18152b] hover:bg-purple-500/20 border border-purple-500/30 text-purple-300 px-6 py-4 rounded-xl font-bold text-sm transition-all text-center flex items-center justify-center space-x-2">
+                        <i class="fas fa-copy"></i>
+                        <span>Kopiuj wzór zamówienia</span>
+                    </button>
+                    <button onclick="openModal()" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-bold text-sm glow-btn transition-all text-center">
+                        Zamów w tej cenie
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -244,14 +339,50 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-purple-500/10 py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between opacity-75 text-sm">
-        <div class="flex items-center space-x-3 mb-4 sm:mb-0">
-            <img src="https://i.imgur.com/HFjXPpE.png" alt="XenonCore Logo" class="h-8 w-8 rounded-lg object-cover">
-            <span class="font-bold">XenonCore</span>
-            <span>&copy; 2026 Wszelkie prawa zastrzeżone.</span>
-        </div>
-        <div class="flex items-center space-x-6">
-            <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="hover:text-purple-400 transition-colors flex items-center space-x-2"><i class="fab fa-discord text-lg"></i> <span>Discord Community</span></a>
+    <footer class="border-t border-purple-500/15 bg-[#07050e] pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="https://i.imgur.com/HFjXPpE.png" alt="XenonCore Logo" class="h-10 w-10 rounded-xl object-cover border border-purple-500/40">
+                        <span class="text-lg font-extrabold tracking-wider bg-gradient-to-r from-white via-purple-300 to-neonViolet bg-clip-text text-transparent">XenonCore</span>
+                    </div>
+                    <p class="opacity-70 text-sm max-w-sm leading-relaxed mb-6">
+                        Twój niezawodny partner w świecie nowoczesnego developmentu, skryptów pod Minecrafta oraz profesjonalnych zasobów cyfrowych.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 hover:bg-purple-500/20 hover:scale-105 transition-all">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#uslugi" class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 hover:bg-purple-500/20 hover:scale-105 transition-all">
+                            <i class="fas fa-code"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-wider mb-4 text-purple-300">Nawigacja</h4>
+                    <ul class="space-y-2.5 text-sm opacity-75">
+                        <li><a href="#" class="hover:text-purple-400 transition-colors">Strona Główna</a></li>
+                        <li><a href="#uslugi" class="hover:text-purple-400 transition-colors">Usługi</a></li>
+                        <li><a href="#kalkulator" class="hover:text-purple-400 transition-colors">Kalkulator</a></li>
+                        <li><a href="#skrypt-lab" class="hover:text-purple-400 transition-colors">Skrypt Lab</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold uppercase tracking-wider mb-4 text-purple-300">Społeczność</h4>
+                    <ul class="space-y-2.5 text-sm opacity-75">
+                        <li><a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="hover:text-purple-400 transition-colors flex items-center space-x-1.5"><i class="fab fa-discord text-indigo-400"></i> <span>Serwer Discord</span></a></li>
+                        <li><a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="hover:text-purple-400 transition-colors flex items-center space-x-1.5"><i class="fas fa-ticket-alt text-purple-400"></i> <span>Kanał #🎟・ticket</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-purple-500/10 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs opacity-60">
+                <p>&copy; 2026 XenonCore. Wszelkie prawa zastrzeżone. Płatności przez Tipply.</p>
+                <p class="mt-2 sm:mt-0">Projekt stworzony z pasją do technologii.</p>
+            </div>
         </div>
     </footer>
 
@@ -265,7 +396,7 @@
                 <i class="fab fa-discord"></i>
             </div>
             <h3 class="text-2xl font-bold mb-2">Dołącz do XenonCore</h3>
-            <p class="opacity-75 text-sm mb-8 leading-relaxed">Aby rozpocząć współpracę, złożyć zamówienie na skrypt/stronę lub odebrać paczkę tekstur za zaproszenia, wejdź na nasz serwer Discord!</p>
+            <p class="opacity-75 text-sm mb-8 leading-relaxed">Aby złożyć zamówienie, wejdź na nasz serwer Discord i utwórz ticket na kanale <code class="text-purple-300 font-bold">#🎟・ticket</code>. Płatności realizujemy przez Tipply!</p>
             <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="block w-full bg-[#5865F2] hover:bg-[#4752c4] text-white py-4 rounded-xl font-bold text-base shadow-xl transition-all mb-3 text-center transform hover:-translate-y-0.5">
                 Przejdź na Discord
             </a>
@@ -300,13 +431,66 @@
             if (e.target === modal) closeModal();
         });
 
-        // Advanced Cyber Grid & Nodes Background Animation
+        // Toast notification helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Advanced Range Calculator script
+        function calculatePrice() {
+            let select = document.getElementById('calcService');
+            let val = select.value.split('-');
+            let minBase = parseInt(val[0]);
+            let maxBase = parseInt(val[1]);
+            
+            let isExpress = document.getElementById('calcExpress').checked;
+            let expressMin = isExpress ? 5 : 0;
+            let expressMax = isExpress ? 10 : 0;
+
+            let finalMin = minBase + expressMin;
+            let finalMax = maxBase + expressMax;
+
+            let resultText = (finalMin === finalMax) ? finalMin + " PLN" : finalMin + " – " + finalMax + " PLN";
+            document.getElementById('calcTotal').innerText = resultText;
+            return {
+                serviceName: select.options[select.selectedIndex].text,
+                price: resultText,
+                express: isExpress ? "Tak" : "Nie"
+            };
+        }
+
+        // Copy order template to clipboard for Discord tickets
+        function copyOrderTemplate() {
+            let details = calculatePrice();
+            let template = `[ZAMÓWIENIE XENONCORE]\n🔹 Wybrana usługa: ${details.serviceName}\n⚡ Ekspresowa realizacja: ${details.express}\n💰 Szacowany koszt: ${details.price}\n\nOpis szczegółów projektu: [Wpisz tutaj swoje wymagania]`;
+            
+            navigator.clipboard.writeText(template).then(() => {
+                showToast("Skopiowano wzór zamówienia do ticketa!");
+            });
+        }
+
+        // Initialize calculation on load
+        calculatePrice();
+
+        // Mocno ulepszona animacja tła (Canvas): płynne, driftujące glowing orbs + gęstsza, responsywna siatka węzłów
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
 
         let particlesArray = [];
-        const numberOfParticles = 45;
-        let connectionDistance = 140;
+        const numberOfParticles = 75; // Zwiększona liczba węzłów
+        let connectionDistance = 170;
+
+        // Dynamiczne orby tła z płynnym przemieszczaniem się
+        let orbs = [
+            { x: window.innerWidth * 0.15, y: window.innerHeight * 0.2, radius: 350, color: 'rgba(147, 51, 234, 0.12)', vx: 0.2, vy: 0.15 },
+            { x: window.innerWidth * 0.85, y: window.innerHeight * 0.7, radius: 450, color: 'rgba(99, 102, 241, 0.10)', vx: -0.15, vy: -0.2 },
+            { x: window.innerWidth * 0.5, y: window.innerHeight * 0.5, radius: 400, color: 'rgba(192, 132, 252, 0.08)', vx: 0.1, vy: -0.1 }
+        ];
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -320,9 +504,9 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1.5;
-                this.speedX = (Math.random() - 0.5) * 0.6;
-                this.speedY = (Math.random() - 0.5) * 0.6;
+                this.size = Math.random() * 2.5 + 1.2;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8;
             }
             update() {
                 this.x += this.speedX;
@@ -334,7 +518,7 @@
                 else if (this.y < 0) this.y = canvas.height;
             }
             draw() {
-                ctx.fillStyle = 'rgba(192, 132, 252, 0.7)';
+                ctx.fillStyle = 'rgba(192, 132, 252, 0.9)';
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -351,6 +535,23 @@
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            // Aktualizacja i rysowanie płynnych, nastrojowych poświat (orbs)
+            orbs.forEach(orb => {
+                orb.x += orb.vx;
+                orb.y += orb.vy;
+
+                // Odbijanie od krawędzi ekranu
+                if (orb.x < -100 || orb.x > canvas.width + 100) orb.vx *= -1;
+                if (orb.y < -100 || orb.y > canvas.height + 100) orb.vy *= -1;
+
+                let gradient = ctx.createRadialGradient(orb.x, orb.y, 20, orb.x, orb.y, orb.radius);
+                gradient.addColorStop(0, orb.color);
+                gradient.addColorStop(1, 'transparent');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            });
+
+            // Rysowanie węzłów i dynamicznych połączeń między nimi
             for (let i = 0; i < particlesArray.length; i++) {
                 particlesArray[i].update();
                 particlesArray[i].draw();
@@ -361,9 +562,9 @@
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
                     if (distance < connectionDistance) {
-                        const opacity = (1 - (distance / connectionDistance)) * 0.35;
+                        const opacity = (1 - (distance / connectionDistance)) * 0.5;
                         ctx.strokeStyle = `rgba(168, 85, 247, ${opacity})`;
-                        ctx.lineWidth = 1;
+                        ctx.lineWidth = 1.2;
                         ctx.beginPath();
                         ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
                         ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
