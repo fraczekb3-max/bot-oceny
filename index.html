@@ -44,9 +44,8 @@
         .glow-btn { box-shadow: 0 0 25px rgba(147, 51, 234, 0.4); }
         .glow-btn:hover { box-shadow: 0 0 35px rgba(168, 85, 247, 0.7); }
 
-        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        canvas#particleCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
-        /* Toast notification */
         #toast {
             visibility: hidden;
             transform: translateX(-50%) translateY(20px);
@@ -62,7 +61,6 @@
 </head>
 <body class="selection:bg-purple-600 selection:text-white">
 
-    <!-- Ulepszone, dynamiczne tło z neonową siatką i pulsującymi światłami -->
     <canvas id="particleCanvas"></canvas>
 
     <!-- Toast Notification Popup -->
@@ -71,45 +69,53 @@
         <span id="toastMessage">Skopiowano tekst do schowka!</span>
     </div>
 
-    <!-- Top Promotion Banner -->
-    <div class="bg-gradient-to-r from-purple-900/80 via-indigo-900/80 to-purple-900/80 border-b border-purple-500/30 text-white text-xs sm:text-sm py-2.5 px-4 text-center relative z-50 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 sm:space-x-3">
-            <span class="inline-flex items-center space-x-1.5 bg-purple-500/20 text-neonViolet px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider text-[10px] border border-purple-500/30">
-                <i class="fas fa-fire text-amber-400"></i> Promocja
-            </span>
-            <span>Free TXT za 10 zaproszeń na DC! Zapraszamy na ticket.</span>
-            <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="underline font-bold text-neonViolet hover:text-white transition-colors">Sprawdź Discord</a>
-        </div>
-    </div>
-
-    <!-- Navigation Header -->
-    <header class="fixed top-[37px] sm:top-[41px] left-0 right-0 z-40 nav-glass transition-colors duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="#" class="flex items-center space-x-3.5 group">
-                <img src="https://i.imgur.com/HFjXPpE.png" alt="XenonCore Logo" class="h-11 w-11 rounded-xl object-cover border border-purple-500/40 group-hover:border-neonViolet group-hover:scale-105 transition-all duration-300 shadow-lg">
-                <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-white via-purple-300 to-neonViolet bg-clip-text text-transparent">XenonCore</span>
-            </a>
-            
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium opacity-90">
-                <a href="#uslugi" class="hover:text-purple-400 transition-colors">Usługi</a>
-                <a href="#kalkulator" class="hover:text-purple-400 transition-colors">Kalkulator</a>
-                <a href="#skrypt-lab" class="hover:text-purple-400 transition-colors">Skrypt Lab</a>
-                <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="hover:text-purple-400 transition-colors flex items-center space-x-1.5">
-                    <i class="fab fa-discord text-indigo-400"></i>
-                    <span>Discord</span>
-                </a>
-            </nav>
-
-            <div class="flex items-center space-x-3">
-                <button onclick="openModal()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm glow-btn transition-all duration-300 transform hover:-translate-y-0.5">
-                    Stwórz&nbsp;&nbsp;&nbsp;&nbsp;zamówienie
-                </button>
+    <!-- Przyklejony kontener zawierający baner oraz menu -->
+    <div class="sticky top-0 z-50 w-full">
+        <!-- Top Promotion Banner -->
+        <div class="bg-gradient-to-r from-purple-900/80 via-indigo-900/80 to-purple-900/80 border-b border-purple-500/30 text-white text-xs sm:text-sm py-2.5 px-4 text-center backdrop-blur-md">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 sm:space-x-3">
+                <span class="inline-flex items-center space-x-1.5 bg-purple-500/20 text-neonViolet px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider text-[10px] border border-purple-500/30">
+                    <i class="fas fa-fire text-amber-400"></i> Promocja
+                </span>
+                <span>Free TXT za 10 zaproszeń na DC! Zapraszamy na ticket.</span>
+                <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="underline font-bold text-neonViolet hover:text-white transition-colors">Sprawdź Discord</a>
             </div>
         </div>
-    </header>
+
+        <!-- Navigation Header -->
+        <header class="nav-glass transition-colors duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <a href="#" class="flex items-center space-x-3.5 group">
+                    <img src="https://i.imgur.com/HFjXPpE.png" alt="XenonCore Logo" class="h-11 w-11 rounded-xl object-cover border border-purple-500/40 group-hover:border-neonViolet group-hover:scale-105 transition-all duration-300 shadow-lg">
+                    <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-white via-purple-300 to-neonViolet bg-clip-text text-transparent">XenonCore</span>
+                </a>
+                
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium opacity-90">
+                    <a href="#uslugi" class="hover:text-purple-400 transition-colors">Usługi</a>
+                    <a href="#media" class="hover:text-purple-400 transition-colors">Media</a>
+                    <a href="#kalkulator" class="hover:text-purple-400 transition-colors">Kalkulator</a>
+                    <a href="#skrypt-lab" class="hover:text-purple-400 transition-colors">Skrypt Lab</a>
+                    <a href="#minigra" id="navGameTab" class="hidden text-neonViolet hover:text-purple-300 transition-colors items-center space-x-1.5 animate-pulse">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Strefa Gier</span>
+                    </a>
+                    <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="hover:text-purple-400 transition-colors flex items-center space-x-1.5">
+                        <i class="fab fa-discord text-indigo-400"></i>
+                        <span>Discord</span>
+                    </a>
+                </nav>
+
+                <div class="flex items-center space-x-3">
+                    <button onclick="openModal()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm glow-btn transition-all duration-300 transform hover:-translate-y-0.5">
+                        Stwórz zamówienie
+                    </button>
+                </div>
+            </div>
+        </header>
+    </div>
 
     <!-- Hero Section -->
-    <section class="relative pt-44 pb-24 md:pt-56 md:pb-36 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+    <section class="relative pt-24 pb-24 md:pt-36 md:pb-36 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
         <div class="md:w-1/2 text-center md:text-left mb-12 md:mb-0">
             <div class="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold mb-6 shadow-inner">
                 <span class="w-2 h-2 rounded-full bg-purple-500 animate-ping"></span>
@@ -248,6 +254,41 @@
         </div>
     </section>
 
+    <!-- Media Section (Przeniesiona nad kalkulator, zaktualizowana do YouTube i TikTok) -->
+    <section id="media" class="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-xs font-bold uppercase tracking-widest text-purple-400 mb-2 block">Materiały wideo</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 tracking-tight">Sekcja <span class="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Media</span></h2>
+            <p class="opacity-80 text-base">Odwiedzaj nasze profile społecznościowe, aby być na bieżąco z nowościami.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="glass-card p-8 rounded-3xl text-center group flex flex-col items-center">
+                <div class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-6 text-red-500 text-3xl group-hover:scale-110 transition-transform">
+                    <i class="fab fa-youtube"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">YouTube</h3>
+                <p class="text-xs opacity-75 mb-6 leading-relaxed">Oglądaj poradniki, zapowiedzi skryptów oraz materiały z naszych projektów.</p>
+                <a href="https://youtube.com" target="_blank" class="mt-auto bg-[#18152b] hover:bg-purple-500/20 border border-purple-500/30 text-purple-300 px-6 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center space-x-2">
+                    <span>Subskrybuj kanał</span>
+                    <i class="fas fa-external-link-alt text-[10px]"></i>
+                </a>
+            </div>
+            
+            <div class="glass-card p-8 rounded-3xl text-center group flex flex-col items-center">
+                <div class="w-16 h-16 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mb-6 text-pink-400 text-3xl group-hover:scale-110 transition-transform">
+                    <i class="fab fa-tiktok"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">TikTok</h3>
+                <p class="text-xs opacity-75 mb-6 leading-relaxed">Krótkie materiały, ciekawostki z programowania i prezentacje prac na żywo.</p>
+                <a href="https://tiktok.com" target="_blank" class="mt-auto bg-[#18152b] hover:bg-purple-500/20 border border-purple-500/30 text-purple-300 px-6 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center space-x-2">
+                    <span>Obserwuj profil</span>
+                    <i class="fas fa-external-link-alt text-[10px]"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Interactive Cost Calculator Section -->
     <section id="kalkulator" class="py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <div class="text-center mb-12">
@@ -349,6 +390,60 @@
         </div>
     </section>
 
+    <!-- Mini Arcade Hub Section -->
+    <section id="minigra" class="py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <div class="text-center mb-10">
+            <span class="text-xs font-bold uppercase tracking-widest text-purple-400 mb-2 block">Strefa Rozrywki Retro</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-3">Xenon Arcade Hub</h2>
+            <p class="opacity-75 text-sm">Wybierz grę z menu poniżej, baw się dobrze i pobijaj rekordy!</p>
+        </div>
+
+        <!-- Przełącznik / Menu Gier -->
+        <div class="flex justify-center gap-3 mb-8">
+            <button onclick="switchGame('breakout')" id="btnGameBreakout" class="bg-purple-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg flex items-center space-x-2 border border-purple-400/40">
+                <i class="fas fa-table-tennis"></i>
+                <span>Breakout</span>
+            </button>
+            <button onclick="switchGame('snake')" id="btnGameSnake" class="bg-[#18152b] text-purple-300 hover:bg-purple-500/20 px-6 py-2.5 rounded-xl font-bold text-sm transition-all border border-purple-500/30 flex items-center space-x-2">
+                <i class="fas fa-worm"></i>
+                <span>Snake</span>
+            </button>
+        </div>
+
+        <div class="glass-card p-6 sm:p-8 rounded-3xl shadow-2xl border border-purple-500/20 text-center relative overflow-hidden flex flex-col items-center">
+            
+            <!-- Panel Wyników -->
+            <div class="flex justify-center items-center gap-4 sm:gap-6 mb-6 w-full max-w-md">
+                <div class="bg-[#18152b] flex-1 py-3 px-3 rounded-2xl border border-purple-500/30 text-center">
+                    <span class="text-xs opacity-60 block uppercase">Wynik</span>
+                    <span class="text-xl sm:text-2xl font-extrabold text-neonViolet code-font" id="arcadeScore">0</span>
+                </div>
+                <div class="bg-[#18152b] flex-1 py-3 px-3 rounded-2xl border border-purple-500/30 text-center">
+                    <span class="text-xs opacity-60 block uppercase">Rekord</span>
+                    <span class="text-xl sm:text-2xl font-extrabold text-purple-300 code-font" id="arcadeHighScore">0</span>
+                </div>
+            </div>
+
+            <!-- Kontener planszy gier -->
+            <div class="relative bg-[#07050e] border-2 border-purple-500/40 rounded-2xl overflow-hidden shadow-inner mb-6" id="arcadeContainer">
+                <canvas id="arcadeCanvas" width="400" height="400" class="block max-w-full h-auto cursor-pointer"></canvas>
+                
+                <!-- Ekran startowy / Koniec gry overlay -->
+                <div id="arcadeOverlay" class="absolute inset-0 bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center transition-all">
+                    <h3 id="arcadeOverlayTitle" class="text-2xl font-bold mb-2 text-white">Xenon Breakout</h3>
+                    <p id="arcadeOverlayDesc" class="text-xs opacity-75 mb-6 max-w-xs">Używaj strzałek lub myszki do sterowania paletką.</p>
+                    <button onclick="startActiveGame()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-3 rounded-xl font-bold text-sm glow-btn transition-all">
+                        Rozpocznij Grę
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 text-xs opacity-60" id="arcadeControlsHint">
+                <span><i class="fas fa-arrows-alt-h"></i> Strzałki / Myszka - Ruch paletki</span>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="border-t border-purple-500/15 bg-[#07050e] pt-16 pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -376,8 +471,10 @@
                     <ul class="space-y-2.5 text-sm opacity-75">
                         <li><a href="#" class="hover:text-purple-400 transition-colors">Strona Główna</a></li>
                         <li><a href="#uslugi" class="hover:text-purple-400 transition-colors">Usługi</a></li>
+                        <li><a href="#media" class="hover:text-purple-400 transition-colors">Media</a></li>
                         <li><a href="#kalkulator" class="hover:text-purple-400 transition-colors">Kalkulator</a></li>
                         <li><a href="#skrypt-lab" class="hover:text-purple-400 transition-colors">Skrypt Lab</a></li>
+                        <li><a href="#minigra" class="hover:text-purple-400 transition-colors">Strefa Gier</a></li>
                     </ul>
                 </div>
 
@@ -399,19 +496,26 @@
 
     <!-- Discord Modal Popup -->
     <div id="discordModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md hidden transition-opacity">
-        <div class="glass-card p-8 rounded-3xl max-w-md w-full mx-4 shadow-2xl relative text-center transform transition-all scale-95 opacity-0" id="modalContent">
-            <button onclick="closeModal()" class="absolute top-4 right-4 opacity-70 hover:opacity-100 transition-opacity w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center">
+        <div class="glass-card p-8 rounded-[28px] max-w-[420px] w-full mx-4 shadow-2xl relative text-center transform transition-all scale-95 opacity-0 border border-purple-500/30" id="modalContent">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-white/70 hover:text-white transition-opacity w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center">
                 <i class="fas fa-times"></i>
             </button>
-            <div class="w-16 h-16 bg-[#5865F2]/20 border border-[#5865F2]/40 rounded-2xl flex items-center justify-center text-[#5865F2] text-3xl mx-auto mb-6 shadow-lg">
+            
+            <div class="w-16 h-16 bg-[#5865F2]/15 border border-[#5865F2]/30 rounded-2xl flex items-center justify-center text-[#5865F2] text-3xl mx-auto mb-6 shadow-lg">
                 <i class="fab fa-discord"></i>
             </div>
-            <h3 class="text-2xl font-bold mb-2">Dołącz do XenonCore</h3>
-            <p class="opacity-75 text-sm mb-8 leading-relaxed">Aby złożyć zamówienie, wejdź na nasz serwer Discord i utwórz ticket na kanale <code class="text-purple-300 font-bold">#🎟・ticket</code>. Płatności realizujemy przez Tipply!</p>
-            <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="block w-full bg-[#5865F2] hover:bg-[#4752c4] text-white py-4 rounded-xl font-bold text-base shadow-xl transition-all mb-3 text-center transform hover:-translate-y-0.5">
+            
+            <h3 class="text-2xl font-bold mb-3 text-white tracking-tight">Dołącz do XenonCore</h3>
+            
+            <p class="text-gray-300 text-sm mb-7 leading-relaxed font-normal">
+                Aby złożyć zamówienie, wejdź na nasz serwer Discord i utwórz ticket na kanale <span class="text-purple-300 font-semibold">#🎟・ticket</span>. Płatności realizujemy przez Tipply!
+            </p>
+            
+            <a href="https://discord.com/invite/ArpKXfHWZv" target="_blank" class="block w-full bg-[#5865F2] hover:bg-[#4752c4] text-white py-4 rounded-xl font-bold text-sm shadow-xl transition-all mb-3 text-center transform hover:-translate-y-0.5">
                 Przejdź na Discord
             </a>
-            <button onclick="closeModal()" class="text-sm opacity-70 hover:opacity-100 transition-opacity py-2">
+            
+            <button onclick="closeModal()" class="text-sm text-gray-400 hover:text-white transition-opacity py-2 font-medium">
                 Zamknij okno
             </button>
         </div>
@@ -442,7 +546,6 @@
             if (e.target === modal) closeModal();
         });
 
-        // Toast notification helper
         function showToast(msg) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').innerText = msg;
@@ -452,7 +555,6 @@
             }, 3000);
         }
 
-        // Advanced Range Calculator script
         function calculatePrice() {
             let select = document.getElementById('calcService');
             let val = select.value.split('-');
@@ -475,7 +577,6 @@
             };
         }
 
-        // Copy order template to clipboard for Discord tickets
         function copyOrderTemplate() {
             let details = calculatePrice();
             let template = `[ZAMÓWIENIE XENONCORE]\n🔹 Wybrana usługa: ${details.serviceName}\n⚡ Ekspresowa realizacja: ${details.express}\n💰 Szacowany koszt: ${details.price}\n\nOpis szczegółów projektu: [Wpisz tutaj swoje wymagania]`;
@@ -485,18 +586,343 @@
             });
         }
 
-        // Initialize calculation on load
         calculatePrice();
 
-        // Mocno ulepszona animacja tła (Canvas): płynne, driftujące glowing orbs + gęstsza, responsywna siatka węzłów
+        // --- Arcade Hub Logika ---
+        const arcadeCanvas = document.getElementById('arcadeCanvas');
+        const arcadeCtx = arcadeCanvas.getContext('2d');
+
+        let currentGame = 'breakout';
+        let arcadeRunning = false;
+        let arcadeAnimId = null;
+        let arcadeIntervalId = null;
+
+        let arcadeScore = 0;
+        let breakoutHighScore = localStorage.getItem('xenonBreakoutHighScore') || 0;
+        let snakeHighScore = localStorage.getItem('xenonSnakeHighScore') || 0;
+
+        function updateHighScoreDisplay() {
+            if (currentGame === 'breakout') {
+                document.getElementById('arcadeHighScore').innerText = breakoutHighScore;
+            } else {
+                document.getElementById('arcadeHighScore').innerText = snakeHighScore;
+            }
+        }
+
+        function switchGame(gameName) {
+            stopAllGames();
+            currentGame = gameName;
+            
+            const btnB = document.getElementById('btnGameBreakout');
+            const btnS = document.getElementById('btnGameSnake');
+            const title = document.getElementById('arcadeOverlayTitle');
+            const desc = document.getElementById('arcadeOverlayDesc');
+            const hint = document.getElementById('arcadeControlsHint');
+            
+            if (gameName === 'breakout') {
+                btnB.className = "bg-purple-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg flex items-center space-x-2 border border-purple-400/40";
+                btnS.className = "bg-[#18152b] text-purple-300 hover:bg-purple-500/20 px-6 py-2.5 rounded-xl font-bold text-sm transition-all border border-purple-500/30 flex items-center space-x-2";
+                title.innerText = "Xenon Breakout";
+                desc.innerText = "Używaj strzałek lub myszki do poruszania paletką.";
+                hint.innerHTML = '<span><i class="fas fa-arrows-alt-h"></i> Strzałki / Myszka - Ruch paletki</span>';
+                initBreakout();
+            } else {
+                btnS.className = "bg-purple-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg flex items-center space-x-2 border border-purple-400/40";
+                btnB.className = "bg-[#18152b] text-purple-300 hover:bg-purple-500/20 px-6 py-2.5 rounded-xl font-bold text-sm transition-all border border-purple-500/30 flex items-center space-x-2";
+                title.innerText = "Xenon Snake";
+                desc.innerText = "Steruj wężykiem za pomocą strzałek na klawiaturze.";
+                hint.innerHTML = '<span><i class="fas fa-keyboard"></i> Strzałki - Sterowanie wężykiem</span>';
+                initSnake();
+            }
+            updateHighScoreDisplay();
+            document.getElementById('arcadeOverlay').classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function stopAllGames() {
+            arcadeRunning = false;
+            if (arcadeAnimId) cancelAnimationFrame(arcadeAnimId);
+            if (arcadeIntervalId) clearInterval(arcadeIntervalId);
+        }
+
+        function startActiveGame() {
+            document.getElementById('arcadeOverlay').classList.add('opacity-0', 'pointer-events-none');
+            arcadeScore = 0;
+            document.getElementById('arcadeScore').innerText = arcadeScore;
+            arcadeRunning = true;
+
+            if (currentGame === 'breakout') {
+                resetBreakoutVars();
+                breakoutGameLoop();
+            } else {
+                resetSnakeVars();
+                arcadeIntervalId = setInterval(snakeGameLoop, 100);
+            }
+        }
+
+        let paddle = { x: 160, y: 380, width: 80, height: 12, speed: 6 };
+        let ball = { x: 200, y: 200, radius: 6, dx: 2.5, dy: -2.5 };
+        let bricks = [];
+        const bRows = 4, bCols = 6, bWidth = 56, bHeight = 16, bPad = 8, bTop = 30, bLeft = 22;
+
+        function initBreakout() {
+            initBricks();
+            arcadeCtx.fillStyle = '#07050e';
+            arcadeCtx.fillRect(0, 0, 400, 400);
+            drawBreakoutStatic();
+        }
+
+        function initBricks() {
+            bricks = [];
+            for (let c = 0; c < bCols; c++) {
+                bricks[c] = [];
+                for (let r = 0; r < bRows; r++) {
+                    bricks[c][r] = { x: 0, y: 0, status: 1 };
+                }
+            }
+        }
+
+        function resetBreakoutVars() {
+            paddle.x = 160;
+            ball.x = 200;
+            ball.y = 250;
+            ball.dx = (Math.random() > 0.5 ? 1 : -1) * 2.5;
+            ball.dy = -3;
+            initBricks();
+        }
+
+        function drawBreakoutStatic() {
+            arcadeCtx.fillStyle = '#07050e';
+            arcadeCtx.fillRect(0, 0, 400, 400);
+            const colors = ['#c084fc', '#a855f7', '#9333ea', '#7e22ce'];
+            for (let c = 0; c < bCols; c++) {
+                for (let r = 0; r < bRows; r++) {
+                    let bx = c * (bWidth + bPad) + bLeft;
+                    let by = r * (bHeight + bPad) + bTop;
+                    arcadeCtx.fillStyle = colors[r % colors.length];
+                    arcadeCtx.fillRect(bx, by, bWidth, bHeight);
+                }
+            }
+            arcadeCtx.fillStyle = '#c084fc';
+            arcadeCtx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+        }
+
+        let keys = {};
+        window.addEventListener('keydown', (e) => {
+            keys[e.code] = true;
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+                if (arcadeRunning) e.preventDefault();
+            }
+        });
+        window.addEventListener('keyup', (e) => { keys[e.code] = false; });
+
+        arcadeCanvas.addEventListener('mousemove', (e) => {
+            if (!arcadeRunning || currentGame !== 'breakout') return;
+            const rect = arcadeCanvas.getBoundingClientRect();
+            let mouseX = e.clientX - rect.left;
+            paddle.x = mouseX - paddle.width / 2;
+            if (paddle.x < 10) paddle.x = 10;
+            if (paddle.x + paddle.width > 390) paddle.x = 390 - paddle.width;
+        });
+
+        function breakoutGameLoop() {
+            if (!arcadeRunning || currentGame !== 'breakout') return;
+
+            if (keys['ArrowLeft'] || keys['KeyA']) paddle.x -= paddle.speed;
+            if (keys['ArrowRight'] || keys['KeyD']) paddle.x += paddle.speed;
+            if (paddle.x < 10) paddle.x = 10;
+            if (paddle.x + paddle.width > 390) paddle.x = 390 - paddle.width;
+
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            if (ball.x - ball.radius < 10) { ball.dx = -ball.dx; ball.x = 10 + ball.radius; }
+            if (ball.x + ball.radius > 390) { ball.dx = -ball.dx; ball.x = 390 - ball.radius; }
+            if (ball.y - ball.radius < 10) { ball.dy = -ball.dy; ball.y = 10 + ball.radius; }
+
+            if (ball.y + ball.radius >= paddle.y && ball.y - ball.radius <= paddle.y + paddle.height && ball.x >= paddle.x && ball.x <= paddle.x + paddle.width) {
+                let hitPoint = ball.x - (paddle.x + paddle.width / 2);
+                ball.dx = hitPoint * 0.12;
+                ball.dy = -Math.abs(ball.dy);
+            }
+
+            if (ball.y > 400) {
+                endArcadeGame("Koniec gry! Breakout");
+                return;
+            }
+
+            for (let c = 0; c < bCols; c++) {
+                for (let r = 0; r < bRows; r++) {
+                    let b = bricks[c][r];
+                    if (b.status === 1) {
+                        let bx = c * (bWidth + bPad) + bLeft;
+                        let by = r * (bHeight + bPad) + bTop;
+                        if (ball.x > bx && ball.x < bx + bWidth && ball.y > by && ball.y < by + bHeight) {
+                            ball.dy = -ball.dy;
+                            b.status = 0;
+                            arcadeScore += 20;
+                            document.getElementById('arcadeScore').innerText = arcadeScore;
+                            if (arcadeScore > breakoutHighScore) {
+                                breakoutHighScore = arcadeScore;
+                                updateHighScoreDisplay();
+                                localStorage.setItem('xenonBreakoutHighScore', breakoutHighScore);
+                            }
+                        }
+                    }
+                }
+            }
+
+            arcadeCtx.fillStyle = '#07050e';
+            arcadeCtx.fillRect(0, 0, 400, 400);
+
+            const colors = ['#c084fc', '#a855f7', '#9333ea', '#7e22ce'];
+            for (let c = 0; c < bCols; c++) {
+                for (let r = 0; r < bRows; r++) {
+                    if (bricks[c][r].status === 1) {
+                        let bx = c * (bWidth + bPad) + bLeft;
+                        let by = r * (bHeight + bPad) + bTop;
+                        arcadeCtx.fillStyle = colors[r % colors.length];
+                        arcadeCtx.shadowColor = colors[r % colors.length];
+                        arcadeCtx.shadowBlur = 6;
+                        arcadeCtx.fillRect(bx, by, bWidth, bHeight);
+                    }
+                }
+            }
+            arcadeCtx.shadowBlur = 0;
+
+            arcadeCtx.fillStyle = '#c084fc';
+            arcadeCtx.shadowColor = '#c084fc';
+            arcadeCtx.shadowBlur = 10;
+            arcadeCtx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+
+            arcadeCtx.fillStyle = '#ffffff';
+            arcadeCtx.beginPath();
+            arcadeCtx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            arcadeCtx.fill();
+            arcadeCtx.shadowBlur = 0;
+
+            arcadeAnimId = requestAnimationFrame(breakoutGameLoop);
+        }
+
+        let snake = [];
+        let food = { x: 0, y: 0 };
+        let snakeDir = 'RIGHT';
+        let nextSnakeDir = 'RIGHT';
+        const gridSize = 20;
+
+        function initSnake() {
+            arcadeCtx.fillStyle = '#07050e';
+            arcadeCtx.fillRect(0, 0, 400, 400);
+            arcadeCtx.fillStyle = '#c084fc';
+            arcadeCtx.fillRect(160, 200, gridSize, gridSize);
+        }
+
+        function resetSnakeVars() {
+            snake = [
+                { x: 160, y: 200 },
+                { x: 140, y: 200 },
+                { x: 120, y: 200 }
+            ];
+            snakeDir = 'RIGHT';
+            nextSnakeDir = 'RIGHT';
+            spawnFood();
+        }
+
+        function spawnFood() {
+            food.x = Math.floor(Math.random() * (400 / gridSize)) * gridSize;
+            food.y = Math.floor(Math.random() * (400 / gridSize)) * gridSize;
+            snake.forEach(part => {
+                if (part.x === food.x && part.y === food.y) spawnFood();
+            });
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (currentGame !== 'snake' || !arcadeRunning) return;
+            if ((e.code === 'ArrowLeft' || e.code === 'KeyA') && snakeDir !== 'RIGHT') nextSnakeDir = 'LEFT';
+            if ((e.code === 'ArrowUp' || e.code === 'KeyW') && snakeDir !== 'DOWN') nextSnakeDir = 'UP';
+            if ((e.code === 'ArrowRight' || e.code === 'KeyD') && snakeDir !== 'LEFT') nextSnakeDir = 'RIGHT';
+            if ((e.code === 'ArrowDown' || e.code === 'KeyS') && snakeDir !== 'UP') nextSnakeDir = 'DOWN';
+        });
+
+        function snakeGameLoop() {
+            if (!arcadeRunning || currentGame !== 'snake') return;
+            snakeDir = nextSnakeDir;
+
+            let head = { x: snake[0].x, y: snake[0].y };
+            if (snakeDir === 'LEFT') head.x -= gridSize;
+            if (snakeDir === 'RIGHT') head.x += gridSize;
+            if (snakeDir === 'UP') head.y -= gridSize;
+            if (snakeDir === 'DOWN') head.y += gridSize;
+
+            if (head.x < 0 || head.x >= 400 || head.y < 0 || head.y >= 400) {
+                endArcadeGame("Koniec gry! Wąż uderzył w ścianę.");
+                return;
+            }
+            for (let i = 0; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    endArcadeGame("Koniec gry! Wąż zjadł samego siebie.");
+                    return;
+                }
+            }
+
+            snake.unshift(head);
+
+            if (head.x === food.x && head.y === food.y) {
+                arcadeScore += 10;
+                document.getElementById('arcadeScore').innerText = arcadeScore;
+                if (arcadeScore > snakeHighScore) {
+                    snakeHighScore = arcadeScore;
+                    updateHighScoreDisplay();
+                    localStorage.setItem('xenonSnakeHighScore', snakeHighScore);
+                }
+                spawnFood();
+            } else {
+                snake.pop();
+            }
+
+            arcadeCtx.fillStyle = '#07050e';
+            arcadeCtx.fillRect(0, 0, 400, 400);
+
+            arcadeCtx.fillStyle = '#ef4444';
+            arcadeCtx.shadowColor = '#ef4444';
+            arcadeCtx.shadowBlur = 10;
+            arcadeCtx.fillRect(food.x + 2, food.y + 2, gridSize - 4, gridSize - 4);
+
+            snake.forEach((part, index) => {
+                arcadeCtx.fillStyle = index === 0 ? '#c084fc' : '#9333ea';
+                arcadeCtx.shadowColor = '#c084fc';
+                arcadeCtx.shadowBlur = index === 0 ? 8 : 2;
+                arcadeCtx.fillRect(part.x + 1, part.y + 1, gridSize - 2, gridSize - 2);
+            });
+            arcadeCtx.shadowBlur = 0;
+        }
+
+        function endArcadeGame(msg) {
+            stopAllGames();
+            const overlay = document.getElementById('arcadeOverlay');
+            document.getElementById('arcadeOverlayTitle').innerText = "Koniec gry!";
+            document.getElementById('arcadeOverlayDesc').innerText = `${msg} Wynik: ${arcadeScore} pkt.`;
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        initBreakout();
+
+        window.addEventListener('scroll', () => {
+            const navGameTab = document.getElementById('navGameTab');
+            if (window.scrollY > 400) {
+                navGameTab.classList.remove('hidden');
+                navGameTab.classList.add('flex');
+            } else {
+                navGameTab.classList.remove('flex');
+                navGameTab.classList.add('hidden');
+            }
+        });
+
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
-
         let particlesArray = [];
-        const numberOfParticles = 75; // Zwiększona liczba węzłów
+        const numberOfParticles = 75;
         let connectionDistance = 170;
 
-        // Dynamiczne orby tła z płynnym przemieszczaniem się
         let orbs = [
             { x: window.innerWidth * 0.15, y: window.innerHeight * 0.2, radius: 350, color: 'rgba(147, 51, 234, 0.12)', vx: 0.2, vy: 0.15 },
             { x: window.innerWidth * 0.85, y: window.innerHeight * 0.7, radius: 450, color: 'rgba(99, 102, 241, 0.10)', vx: -0.15, vy: -0.2 },
@@ -522,7 +948,6 @@
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-
                 if (this.x > canvas.width) this.x = 0;
                 else if (this.x < 0) this.x = canvas.width;
                 if (this.y > canvas.height) this.y = 0;
@@ -545,13 +970,9 @@
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Aktualizacja i rysowanie płynnych, nastrojowych poświat (orbs)
             orbs.forEach(orb => {
                 orb.x += orb.vx;
                 orb.y += orb.vy;
-
-                // Odbijanie od krawędzi ekranu
                 if (orb.x < -100 || orb.x > canvas.width + 100) orb.vx *= -1;
                 if (orb.y < -100 || orb.y > canvas.height + 100) orb.vy *= -1;
 
@@ -562,7 +983,6 @@
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             });
 
-            // Rysowanie węzłów i dynamicznych połączeń między nimi
             for (let i = 0; i < particlesArray.length; i++) {
                 particlesArray[i].update();
                 particlesArray[i].draw();
